@@ -3,18 +3,6 @@
 An **unofficial** fan page for the girl group NewJeans, built as a frontend
 practice project. It is **plain HTML + CSS + JavaScript** (no framework, no build step).
 
-## Run it
-
-The site is static. Open `index.html` directly, or run a local server:
-
-```bash
-python -m http.server 8090
-# then open http://localhost:8090
-```
-
-(A local server is needed so `fetch('js/photos.json')` works; opening `file://`
-directly is blocked by the browser's CORS policy.)
-
 ## Page contents
 
 | Section | Contents |
