@@ -1,8 +1,8 @@
 /* =========================================================
    NewJeans fan page - immersive layer (Y2K / Powerpuff)
-   A custom bead cursor, a drifting field of pink / blue / lime
-   beads that lean away from the pointer, hero parallax, and a
-   smooth section-jump via the View Transitions API.
+   A custom bead cursor, a still field of pink / blue / lime
+   beads that only push away from the pointer, hero parallax, and
+   a smooth section-jump via the View Transitions API.
 
    Everything is CSS/JS authored - no third-party art. All of it
    is skipped under prefers-reduced-motion and on touch devices.
