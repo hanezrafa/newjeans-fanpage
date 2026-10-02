@@ -661,17 +661,18 @@ main { display: block; }
   }
   .y2k-cursor__ring {
     position: absolute;
-    width: 34px;
-    height: 34px;
-    margin: -17px 0 0 -17px;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
     border-radius: 50%;
-    border: 2px solid var(--bubble);
+    border: 2.5px solid var(--bubble);
+    opacity: 0.85;
     transform: translate(var(--rx, 0), var(--ry, 0));
-    transition: border-color 0.2s, scale 0.2s;
+    transition: border-color 0.2s, opacity 0.2s;
   }
   /* on clickable things the bead swells and the ring turns pink */
   .y2k-cursor.is-hot .y2k-cursor__dot { background: var(--blossom); --cs: 1.9; }
-  .y2k-cursor.is-hot .y2k-cursor__ring { border-color: var(--blossom); }
+  .y2k-cursor.is-hot .y2k-cursor__ring { border-color: var(--blossom); opacity: 1; }
   /* hide the system cursor only where we draw our own */
   body.has-y2k-cursor,
   body.has-y2k-cursor a,

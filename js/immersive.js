@@ -38,9 +38,9 @@
     });
 
     (function loop() {
-      // only the ring trails, and only slightly - a light Y2K drift
-      rx += (mx - rx) * 0.72;
-      ry += (my - ry) * 0.72;
+      // the ring trails well behind - a clear Y2K lag
+      rx += (mx - rx) * 0.17;
+      ry += (my - ry) * 0.17;
       ring.style.setProperty('--rx', rx + 'px');
       ring.style.setProperty('--ry', ry + 'px');
       requestAnimationFrame(loop);
