@@ -169,7 +169,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  opacity: 0.16;
+  opacity: 0.26;
   filter: grayscale(1) contrast(1.15);
   pointer-events: none;
   /* tinted toward the member's colour and dissolved at the edges */
@@ -191,5 +191,5 @@
 .topbar, main, .foot { position: relative; z-index: 1; }
 
 @media (max-width: 720px) {
-  .silhouette { width: 160vw; height: 160vw; opacity: 0.12; }
+  .silhouette { width: 160vw; height: 160vw; opacity: 0.2; }
 }
