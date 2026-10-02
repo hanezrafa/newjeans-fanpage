@@ -975,24 +975,12 @@ main { display: block; }
 .era__card > * { position: relative; z-index: 2; }
 /* the era's colour chip stays on top */
 .era__dot { z-index: 3; }
-/* the colour chip sits inline with the year, so it always lines up */
 .era__year {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   color: var(--board);
   opacity: 0.85;
-}
-.era__year::before {
-  content: "";
-  flex: none;
-  width: 10px;
-  height: 10px;
-  background: var(--tone);
-  box-shadow: 0 0 0 2px var(--ink);
 }
 .era:hover .era__card { transform: translateX(4px); box-shadow: var(--shadow); }
 .era__title {
@@ -1010,8 +998,6 @@ main { display: block; }
   .eras__line::before { left: 50%; margin-left: -1px; }
   .era { width: 50%; padding: 0 0 2.2rem 0; }
   .era:nth-child(odd) { padding-right: 2.2rem; text-align: right; }
-  /* keep chip on the left of the year on every card, so spacing is identical */
-  .era:nth-child(odd) .era__year { justify-content: flex-end; }
   .era:nth-child(even) { margin-left: 50%; padding-left: 2.2rem; }
   .era:nth-child(odd) .era__dot { left: auto; right: -8px; }
   .era:nth-child(even) .era__dot { left: -8px; }
