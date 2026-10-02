@@ -24,25 +24,23 @@
     var dot = cursor.querySelector('.y2k-cursor__dot');
     var ring = cursor.querySelector('.y2k-cursor__ring');
     var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    var dx = mx, dy = my, rx = mx, ry = my;
+    var rx = mx, ry = my;
 
     document.body.classList.add('has-y2k-cursor');
 
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX; my = e.clientY;
+      // the dot follows the pointer exactly (no lag)
+      dot.style.setProperty('--cx', mx + 'px');
+      dot.style.setProperty('--cy', my + 'px');
       var hot = e.target.closest('a, button, .shot__btn, .tape-btn, input');
       cursor.classList.toggle('is-hot', !!hot);
     });
 
     (function loop() {
-      // dot tracks the pointer almost exactly; the ring trails just a little
-      dx += (mx - dx) * 0.95;
-      dy += (my - dy) * 0.95;
-      rx += (mx - rx) * 0.5;
-      ry += (my - ry) * 0.5;
-      // transform is composed in CSS from these vars, so hover scale survives
-      dot.style.setProperty('--cx', dx + 'px');
-      dot.style.setProperty('--cy', dy + 'px');
+      // only the ring trails, and only slightly - a light Y2K drift
+      rx += (mx - rx) * 0.72;
+      ry += (my - ry) * 0.72;
       ring.style.setProperty('--rx', rx + 'px');
       ring.style.setProperty('--ry', ry + 'px');
       requestAnimationFrame(loop);

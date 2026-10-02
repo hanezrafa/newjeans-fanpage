@@ -657,7 +657,7 @@ main { display: block; }
     border-radius: 50%;
     background: var(--ink);
     transform: translate(var(--cx, 0), var(--cy, 0)) scale(var(--cs, 1));
-    transition: transform 0.08s linear, background 0.18s;
+    transition: background 0.18s;
   }
   .y2k-cursor__ring {
     position: absolute;
@@ -667,7 +667,7 @@ main { display: block; }
     border-radius: 50%;
     border: 2px solid var(--bubble);
     transform: translate(var(--rx, 0), var(--ry, 0));
-    transition: transform 0.12s linear, border-color 0.2s;
+    transition: border-color 0.2s, scale 0.2s;
   }
   /* on clickable things the bead swells and the ring turns pink */
   .y2k-cursor.is-hot .y2k-cursor__dot { background: var(--blossom); --cs: 1.9; }
