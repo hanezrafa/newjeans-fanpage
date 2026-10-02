@@ -75,7 +75,8 @@
   /* ---------- oversized faded silhouette behind the page ---------- */
   var sil = document.getElementById('silhouette');
   if (sil) {
-    sil.style.backgroundImage = 'url("' + PHOTO_BASE + member.photo + '")';
+    var silPhoto = member.silhouette || member.photo;
+    sil.style.backgroundImage = 'url("' + PHOTO_BASE + silPhoto + '")';
     sil.style.setProperty('--tone', member.tone);
   }
 

@@ -43,7 +43,8 @@ var NJ = {
         ['MBTI', 'ESTJ'],
         ['Colour', 'Blue']
       ],
-      photo: 'MINJI-12.png'
+      photo: 'MINJI-12.png',
+      silhouette: 'MINJI-1-2.png'
     },
     {
       id: 'hanni',
@@ -67,7 +68,8 @@ var NJ = {
         ['MBTI', 'INFP'],
         ['Colour', 'Pink']
       ],
-      photo: 'HANNI-12.png'
+      photo: 'HANNI-12.png',
+      silhouette: 'HANNI-1-2.png'
     },
     {
       id: 'danielle',
@@ -91,7 +93,8 @@ var NJ = {
         ['MBTI', 'ENFP'],
         ['Colour', 'Yellow']
       ],
-      photo: 'DANIELLE-2-4.png'
+      photo: 'DANIELLE-2-4.png',
+      silhouette: 'DANIELLE-1-2.png'
     },
     {
       id: 'haerin',
@@ -115,7 +118,8 @@ var NJ = {
         ['Colour', 'Green'],
         ['Emoji', '🐱']
       ],
-      photo: 'HAERIN-7.png'
+      photo: 'HAERIN-7.png',
+      silhouette: 'HAERIN-1-1.png'
     },
     {
       id: 'hyein',
@@ -139,7 +143,8 @@ var NJ = {
         ['MBTI', 'ISFP'],
         ['Colour', 'Purple']
       ],
-      photo: 'HYEIN-3.png'
+      photo: 'HYEIN-3.png',
+      silhouette: 'HYEIN-1-2.png'
     }
   ],
 
