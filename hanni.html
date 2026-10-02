@@ -15,6 +15,21 @@
 <body data-member="hanni">
   <a class="skip-link" href="#profile">Skip to profile</a>
 
+  <!-- Y2K custom cursor + trailing bead -->
+  <div class="y2k-cursor" id="y2k-cursor" aria-hidden="true">
+    <span class="y2k-cursor__dot"></span>
+    <span class="y2k-cursor__ring"></span>
+  </div>
+
+  <!-- Powerpuff bead field (pink / blue / lime) -->
+  <div class="beadfield" id="beadfield" aria-hidden="true"></div>
+
+  <!-- pixel grain + scanline (screen texture) -->
+  <div class="screen-fx" aria-hidden="true">
+    <div class="screen-fx__grain"></div>
+    <div class="screen-fx__scan"></div>
+  </div>
+
   <header class="topbar" aria-label="NewJeans fan board">
     <a class="topbar__name" href="index.html">NEWJEANS</a>
     <nav class="topbar__nav">
@@ -70,6 +85,7 @@
 
   <script src="js/data.js"></script>
   <script src="js/member.js"></script>
+  <script src="js/immersive.js"></script>
   <script>document.getElementById('foot-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
