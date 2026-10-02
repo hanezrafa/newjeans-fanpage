@@ -69,7 +69,7 @@ var NJ = {
         ['Colour', 'Pink']
       ],
       photo: 'HANNI-12.png',
-      silhouette: 'HANNI-1-2.png'
+      silhouette: 'HANNI-2-2.png'
     },
     {
       id: 'danielle',
