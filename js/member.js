@@ -94,14 +94,64 @@
       '<a href="' + next.id + '.html">' + esc(next.name) + ' →</a>';
   }
 
-  /* ---------- the member's photo board ---------- */
+  /* ---------- the member's photo board (with lightbox) ---------- */
   var grid = document.getElementById('pf-grid');
   var note = document.getElementById('pf-count');
+
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var mine = [];
+  var lbIndex = 0;
+
+  function openLightbox(index) {
+    if (!lightbox) return;
+    lbIndex = index;
+    updateLightbox();
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lb-close').focus();
+  }
+  function updateLightbox() {
+    var p = mine[lbIndex];
+    if (!p) return;
+    lbImg.src = PHOTO_BASE + p.file;
+    lbImg.alt = 'Photo of ' + member.name;
+    lbCap.textContent = member.name + ' · ' + String(lbIndex + 1).padStart(3, '0') + ' / ' + mine.length;
+  }
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+  }
+  function step(delta) {
+    if (!mine.length) return;
+    lbIndex = (lbIndex + delta + mine.length) % mine.length;
+    updateLightbox();
+  }
+
+  function bindLightbox() {
+    if (!lightbox) return;
+    grid.addEventListener('click', function (e) {
+      var btn = e.target.closest('.shot__btn');
+      if (btn) openLightbox(Number(btn.dataset.index));
+    });
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', function () { step(-1); });
+    document.getElementById('lb-next').addEventListener('click', function () { step(1); });
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', function (e) {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+  }
 
   fetch('js/photos.json')
     .then(function (r) { return r.json(); })
     .then(function (list) {
-      var mine = list.filter(function (p) { return p.cat === member.id.toUpperCase(); });
+      mine = list.filter(function (p) { return p.cat === member.id.toUpperCase(); });
       if (note) note.textContent = mine.length + ' photos of ' + member.name;
       if (!grid) return;
       var frag = document.createDocumentFragment();
@@ -110,14 +160,16 @@
         li.style.setProperty('--tilt', tilt(i) + 'deg');
         var btn = el('button', 'shot__btn');
         btn.type = 'button';
-        btn.setAttribute('aria-label', 'Enlarge photo of ' + member.name);
+        btn.dataset.index = i;
+        btn.setAttribute('aria-label', 'Enlarge photo ' + (i + 1) + ' of ' + member.name);
         btn.innerHTML =
-          '<img class="shot__img" src="' + PHOTO_BASE + esc(p.file) + '" alt="' + esc(member.name) + ' — photo ' + (i + 1) + '" loading="lazy" decoding="async">' +
+          '<img class="shot__img" src="' + PHOTO_BASE + esc(p.file) + '" alt="' + esc(member.name) + ', photo ' + (i + 1) + '" loading="lazy" decoding="async">' +
           '<span class="shot__cap">' + esc(member.name) + ' · ' + String(i + 1).padStart(3, '0') + '</span>';
         li.appendChild(btn);
         frag.appendChild(li);
       });
       grid.appendChild(frag);
+      bindLightbox();
     })
     .catch(function () {
       if (note) note.textContent = 'Photos could not be loaded.';

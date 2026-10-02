@@ -57,6 +57,17 @@
     <p class="foot__sig">NEWJEANS · <span id="foot-year"></span></p>
   </footer>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" id="lb-close" aria-label="Close">×</button>
+    <button class="lightbox__prev" id="lb-prev" aria-label="Previous">‹</button>
+    <figure class="lightbox__fig">
+      <img id="lb-img" src="favicon.png" alt="" />
+      <figcaption id="lb-cap"></figcaption>
+    </figure>
+    <button class="lightbox__next" id="lb-next" aria-label="Next">›</button>
+  </div>
+
   <script src="js/data.js"></script>
   <script src="js/member.js"></script>
   <script>document.getElementById('foot-year').textContent = new Date().getFullYear();</script>
