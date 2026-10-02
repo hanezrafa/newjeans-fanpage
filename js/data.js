@@ -91,7 +91,7 @@ var NJ = {
         ['MBTI', 'ENFP'],
         ['Colour', 'Yellow']
       ],
-      photo: 'DANIELLE-2.png'
+      photo: 'DANIELLE-2-4.png'
     },
     {
       id: 'haerin',
