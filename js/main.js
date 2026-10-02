@@ -27,6 +27,11 @@
     var t = ((i * 37) % 7) - 3; // -3..3
     return t === 0 ? 1 : t;
   }
+  // resolve a path against the document, so a URL used from CSS resolves
+  // relative to the page (not relative to the stylesheet)
+  function absUrl(p) {
+    return new URL(p, document.baseURI).href;
+  }
 
   /* ---------- render: intro text ---------- */
   var introText = document.getElementById('intro-text');
@@ -85,10 +90,10 @@
       var li = el('li', 'era reveal');
       li.style.setProperty('--tone', e.tone);
       li.style.setProperty('--i', i);
-      var bgStyle = e.bg ? ' style="background-image:url(\'' + e.bg + '\')"' : '';
+      if (e.bg) li.style.setProperty('--bg', 'url("' + absUrl(e.bg) + '")');
       li.innerHTML =
         '<span class="era__dot" aria-hidden="true"></span>' +
-        '<div class="era__card"' + bgStyle + '>' +
+        '<div class="era__card">' +
           '<span class="era__year">' + esc(e.year) + '</span>' +
           '<h3 class="era__title">' + esc(e.title) + '</h3>' +
           '<p class="era__blurb">' + esc(e.blurb) + '</p>' +
