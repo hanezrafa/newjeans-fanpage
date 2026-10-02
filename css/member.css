@@ -156,3 +156,40 @@
 @media (max-width: 720px) {
   .profile-gallery__grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.9rem; }
 }
+
+/* ---------- oversized, faded silhouette of the member behind the page ---------- */
+.silhouette {
+  position: fixed;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: min(125vh, 115vw);
+  height: min(125vh, 115vw);
+  transform: translate(-50%, -54%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.09;
+  filter: grayscale(1) contrast(1.15);
+  pointer-events: none;
+  /* tinted toward the member's colour and dissolved at the edges */
+  -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
+  mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
+}
+.silhouette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tone, transparent);
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
+  mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
+}
+
+/* keep the page content above the silhouette */
+.topbar, main, .foot { position: relative; z-index: 1; }
+
+@media (max-width: 720px) {
+  .silhouette { width: 160vw; height: 160vw; opacity: 0.07; }
+}

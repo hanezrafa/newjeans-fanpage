@@ -72,6 +72,13 @@
     portrait.alt = member.name + ' of NewJeans';
   }
 
+  /* ---------- oversized faded silhouette behind the page ---------- */
+  var sil = document.getElementById('silhouette');
+  if (sil) {
+    sil.style.backgroundImage = 'url("' + PHOTO_BASE + member.photo + '")';
+    sil.style.setProperty('--tone', member.tone);
+  }
+
   /* ---------- facts ---------- */
   var facts = document.getElementById('pf-facts');
   if (facts && member.facts) {
