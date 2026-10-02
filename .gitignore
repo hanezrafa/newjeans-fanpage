@@ -2,6 +2,10 @@
 server.log
 _serve.bat
 
+# Design/planning notes kept on disk but not published
+DESIGN.md
+PRODUCT.md
+
 # Wallpapers: kept on disk but not pushed to GitHub (too large, not used by the site)
 assets/wallpapers/
 
