@@ -58,7 +58,7 @@ var NJ = {
       from: 'Melbourne, Australia',
       tone: '#b7e46a',
       emoji: '🦦',
-      blurb: 'Born in Vietnam and raised in Melbourne, Hanni was the only trainee from the group’s global auditions to make the final line-up.',
+      blurb: 'Vietnamese-Australian and raised in Melbourne, Hanni was the only trainee from the group’s global auditions to make the final line-up.',
       bio: 'Hanni Pham danced with the Aemina Dance Crew in Melbourne before moving to Korea. She debuted with NewJeans on 22 July 2022 and is known for a bright, high vocal colour.',
       facts: [
         ['Position', 'Vocalist'],
@@ -108,7 +108,7 @@ var NJ = {
       from: 'Seoul, South Korea',
       tone: '#b7a6ff',
       emoji: '🐱',
-      blurb: 'Street-cast, quiet on camera and sharp in the mix — Haerin’s feline look became one of the group’s most recognised images.',
+      blurb: 'Street-cast, quiet on camera and sharp in the mix: Haerin’s feline look became one of the group’s most recognised images.',
       bio: 'Kang Hae-rin was street-cast and joined Source Music in early 2020. She debuted with NewJeans on 22 July 2022 and is known for a low, distinctive vocal tone and a calm, curious manner.',
       facts: [
         ['Birthday', 'May 15, 2006'],
@@ -133,7 +133,7 @@ var NJ = {
       from: 'Incheon, South Korea',
       tone: '#ffc978',
       emoji: '🐹',
-      blurb: 'The youngest member, and a stage veteran before she was a teenager — Hyein had already debuted in a children’s group at nine.',
+      blurb: 'The youngest member, and a stage veteran before she was a teenager: Hyein had already debuted in a children’s group at nine.',
       bio: 'Lee Hye-in debuted in the children’s group U.SSO Girl in 2017 under the name U.Jeong, and later joined Play With Me Club. She debuted with NewJeans on 22 July 2022 as its maknae.',
       facts: [
         ['Position', 'Maknae'],
@@ -154,11 +154,11 @@ var NJ = {
     { year: '2022', month: 'Jul', title: 'Hype Boy', type: 'Single', note: 'Longest-running K-pop female act on Billboard Global 200' },
     { year: '2022', month: 'Aug', title: 'New Jeans', type: 'EP', note: 'Debut EP' },
     { year: '2022', month: 'Dec', title: 'Ditto', type: 'Single', note: 'Pre-release single' },
-    { year: '2023', month: 'Jan', title: 'OMG', type: 'Single Album', note: '' },
+    { year: '2023', month: 'Jan', title: 'OMG', type: 'Single Album', note: 'With lead single "Ditto"' },
     { year: '2023', month: 'Jul', title: 'Get Up', type: 'EP', note: 'Reached no. 1 on the Billboard 200' },
     { year: '2023', month: 'Jul', title: 'Super Shy', type: 'Single', note: 'From the EP Get Up' },
-    { year: '2023', month: 'Okt', title: 'GODS', type: 'Single', note: 'With League of Legends, Worlds 2023 anthem' },
-    { year: '2024', month: 'May', title: 'How Sweet', type: 'Single', note: '' },
+    { year: '2023', month: 'Oct', title: 'GODS', type: 'Single', note: 'With League of Legends, Worlds 2023 anthem' },
+    { year: '2024', month: 'May', title: 'How Sweet', type: 'Single', note: 'With B-side "Bubble Gum"' },
     { year: '2024', month: 'Jun', title: 'Supernatural', type: 'Single', note: 'Official Japanese debut' }
   ],
 

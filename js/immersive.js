@@ -194,11 +194,152 @@
     });
   }
 
+  /* ---------------------------------------------------------
+     Cross-page transition: clicking a member photo tags it with a
+     shared view-transition-name, so it morphs into the profile page.
+     --------------------------------------------------------- */
+  function initPageMorph() {
+    if (!document.startViewTransition || reduce) return;
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('.member__link');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      if (link.host && link.host !== location.host) return;
+      var photo = link.querySelector('.member__photo');
+      if (!photo) return;
+      e.preventDefault();
+      photo.style.viewTransitionName = 'member-photo';
+      document.startViewTransition(function () {
+        location.href = href;
+      });
+      setTimeout(function () { photo.style.viewTransitionName = ''; }, 800);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     3D tilt: the big member prints lean toward the pointer
+     --------------------------------------------------------- */
+  function initTilt() {
+    if (reduce || !finePointer) return;
+    var MAX = 8; // degrees
+
+    // delegated, so member cards that main.js builds after boot still tilt
+    var active = null;
+    document.addEventListener('pointermove', function (e) {
+      var card = e.target.closest ? e.target.closest('.member') : null;
+      if (card !== active) {
+        if (active) { active.classList.remove('is-tilting'); active.style.setProperty('--rx', '0deg'); active.style.setProperty('--ry', '0deg'); }
+        active = card;
+        if (active) active.classList.add('is-tilting');
+      }
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;
+      var py = (e.clientY - r.top) / r.height;
+      card.style.setProperty('--ry', ((px - 0.5) * 2 * MAX).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((0.5 - py) * 2 * MAX).toFixed(2) + 'deg');
+    }, { passive: true });
+  }
+
+  /* ---------------------------------------------------------
+     Scroll progress bar + live section counter
+     --------------------------------------------------------- */
+  function initScrollProgress() {
+    var bar = document.getElementById('scroll-progress');
+    if (!bar) return;
+    var counter = document.getElementById('section-here');
+    var sections = [].slice.call(document.querySelectorAll('[data-section]'));
+    var ticking = false;
+
+    function update() {
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      if (counter && sections.length) {
+        var here = sections[0];
+        var mid = window.scrollY + window.innerHeight * 0.35;
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].offsetTop <= mid) here = sections[i];
+        }
+        var idx = sections.indexOf(here) + 1;
+        var label = here.getAttribute('data-section') || '';
+        if (counter.firstChild) {
+          counter.firstChild.nodeValue = String(idx).padStart(2, '0') + ' / ' + String(sections.length).padStart(2, '0') + '  ' + label;
+        }
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
+
+  /* ---------------------------------------------------------
+     Click ripple: a small bead splash on buttons and links
+     --------------------------------------------------------- */
+  function initRipple() {
+    if (reduce) return;
+    document.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      var host = e.target.closest('a, button, .shot__btn, .tape-btn, .member__link, .release__play');
+      if (!host) return;
+      if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+      var r = host.getBoundingClientRect();
+      var span = document.createElement('span');
+      span.className = 'ripple';
+      span.style.left = (e.clientX - r.left) + 'px';
+      span.style.top = (e.clientY - r.top) + 'px';
+      span.style.width = span.style.height = Math.max(r.width, r.height) * 1.6 + 'px';
+      host.appendChild(span);
+      setTimeout(function () { span.remove(); }, 600);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Bead burst: when a track starts, a few beads fly out of the
+     play button (a small celebratory pop).
+     --------------------------------------------------------- */
+  function beadBurst(x, y) {
+    if (reduce) return;
+    var KINDS = ['blossom', 'bubbles', 'buttercup'];
+    for (var i = 0; i < 10; i++) {
+      var b = document.createElement('span');
+      b.className = 'burst-bead burst-bead--' + KINDS[i % 3];
+      b.style.left = x + 'px';
+      b.style.top = y + 'px';
+      var ang = (Math.PI * 2 * i) / 10 + Math.random() * 0.5;
+      var dist = 40 + Math.random() * 70;
+      b.style.setProperty('--dx', (Math.cos(ang) * dist).toFixed(0) + 'px');
+      b.style.setProperty('--dy', (Math.sin(ang) * dist).toFixed(0) + 'px');
+      var size = 8 + Math.random() * 12;
+      b.style.width = b.style.height = size + 'px';
+      document.body.appendChild(b);
+      (function (node) { setTimeout(function () { node.remove(); }, 700); })(b);
+    }
+  }
+
+  function initBurst() {
+    if (reduce) return;
+    document.addEventListener('nj:play', function (e) {
+      var d = e.detail || {};
+      if (typeof d.x === 'number' && typeof d.y === 'number') beadBurst(d.x, d.y);
+    });
+  }
+
   function boot() {
     initCursor();
     initBeads();
     initParallax();
     initViewTransitions();
+    initPageMorph();
+    initTilt();
+    initScrollProgress();
+    initRipple();
+    initBurst();
   }
 
   if (document.readyState === 'loading') {

@@ -50,7 +50,7 @@
     setPlayingButton(null);
   }
 
-  function play(trackName) {
+  function play(trackName, originEl) {
     var pv = find(trackName);
     if (!pv) return;
     if (audio.src === pv.preview && !audio.paused) { stopAll(); return; }
@@ -58,6 +58,13 @@
     audio.play().then(function () {
       show(pv);
       setPlayingButton(trackName);
+      // let the immersive layer pop a few beads out of the play control
+      if (originEl) {
+        var r = originEl.getBoundingClientRect();
+        document.dispatchEvent(new CustomEvent('nj:play', {
+          detail: { x: r.left + r.width / 2, y: r.top + r.height / 2, track: trackName }
+        }));
+      }
     }).catch(function () {
       // offline or autoplay blocked - tell the user, keep the list usable
       trackEl.textContent = 'Preview unavailable';
@@ -69,12 +76,12 @@
 
   list.addEventListener('click', function (e) {
     var btn = e.target.closest('.release__play');
-    if (btn && btn.dataset.track) { play(btn.dataset.track); return; }
+    if (btn && btn.dataset.track) { play(btn.dataset.track, btn); return; }
     // the whole row is a play target too, so the control is impossible to miss
     var row = e.target.closest('.release');
     if (row) {
       var p = row.querySelector('.release__play[data-track]');
-      if (p) play(p.dataset.track);
+      if (p) play(p.dataset.track, p);
     }
   });
 

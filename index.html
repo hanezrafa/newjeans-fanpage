@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+?<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,6 +6,7 @@
   <title>NewJeans · Fan Board</title>
   <meta name="description" content="A NewJeans fan board: member profiles, discography and concept photo gallery. Unofficial fan page." />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" href="newjeans.ico" sizes="any" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,8 +34,10 @@
 
   <!-- Taped header label -->
   <header class="topbar" aria-label="NewJeans fan board">
+    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress"></span></div>
     <span class="topbar__tape">FAN BOARD</span>
     <span class="topbar__name">NEWJEANS</span>
+    <span class="topbar__here" id="section-here" aria-hidden="true">01 / 05  About</span>
     <nav class="topbar__nav">
       <a href="#members">Members</a>
       <a href="#releases">Music</a>
@@ -81,15 +84,15 @@
     <!-- ============ running ticker ============ -->
     <div class="ticker" aria-hidden="true">
       <div class="ticker__track">
-        <span>Minji</span><span>●</span><span>Hanni</span><span>●</span><span>Danielle</span><span>●</span><span>Haerin</span><span>●</span><span>Hyein</span><span>●</span>
-        <span>Minji</span><span>●</span><span>Hanni</span><span>●</span><span>Danielle</span><span>●</span><span>Haerin</span><span>●</span><span>Hyein</span><span>●</span>
-        <span>Minji</span><span>●</span><span>Hanni</span><span>●</span><span>Danielle</span><span>●</span><span>Haerin</span><span>●</span><span>Hyein</span><span>●</span>
-        <span>Minji</span><span>●</span><span>Hanni</span><span>●</span><span>Danielle</span><span>●</span><span>Haerin</span><span>●</span><span>Hyein</span><span>●</span>
+        <span>Minji</span><span>•</span><span>Hanni</span><span>•</span><span>Danielle</span><span>•</span><span>Haerin</span><span>•</span><span>Hyein</span><span>•</span>
+        <span>Minji</span><span>•</span><span>Hanni</span><span>•</span><span>Danielle</span><span>•</span><span>Haerin</span><span>•</span><span>Hyein</span><span>•</span>
+        <span>Minji</span><span>•</span><span>Hanni</span><span>•</span><span>Danielle</span><span>•</span><span>Haerin</span><span>•</span><span>Hyein</span><span>•</span>
+        <span>Minji</span><span>•</span><span>Hanni</span><span>•</span><span>Danielle</span><span>•</span><span>Haerin</span><span>•</span><span>Hyein</span><span>•</span>
       </div>
     </div>
 
     <!-- ============ INTRO ============ -->
-    <section class="intro" aria-labelledby="intro-h">
+    <section class="intro" data-section="About" aria-labelledby="intro-h">
       <h2 id="intro-h" class="section-num"><span>01</span> About</h2>
       <div class="intro__body">
         <p class="intro__lead">NewJeans changed how a K-pop girl group can look: no gimmicks, just music and a calm image.</p>
@@ -98,14 +101,14 @@
     </section>
 
     <!-- ============ MEMBERS ============ -->
-    <section class="members" id="members" aria-labelledby="members-h">
+    <section class="members" id="members" data-section="Members" aria-labelledby="members-h">
       <h2 id="members-h" class="section-num"><span>02</span> Members</h2>
       <p class="members__hint">Tap a print to open that member's profile.</p>
       <ul class="members__row" id="members-row" role="list"></ul>
     </section>
 
     <!-- ============ RELEASES (playable) ============ -->
-    <section class="releases" id="releases" aria-labelledby="releases-h">
+    <section class="releases" id="releases" data-section="Discography" aria-labelledby="releases-h">
       <h2 id="releases-h" class="section-num"><span>03</span> Discography</h2>
 
       <!-- Y2K CD player: shows the track now playing -->
@@ -129,13 +132,13 @@
     </section>
 
     <!-- ============ ERA TIMELINE ============ -->
-    <section class="eras" id="eras" aria-labelledby="eras-h">
+    <section class="eras" id="eras" data-section="Eras" aria-labelledby="eras-h">
       <h2 id="eras-h" class="section-num"><span>04</span> Eras</h2>
       <ol class="eras__line" id="eras-line"></ol>
     </section>
 
     <!-- ============ GALLERY ============ -->
-    <section class="gallery" id="gallery" aria-labelledby="gallery-h">
+    <section class="gallery" id="gallery" data-section="Gallery" aria-labelledby="gallery-h">
       <h2 id="gallery-h" class="section-num"><span>05</span> Gallery</h2>
 
       <div class="gallery__filters" id="gallery-filters" role="tablist" aria-label="Gallery filter">
@@ -156,7 +159,7 @@
 
   <footer class="foot">
     <p class="foot__note">Unofficial fan page. Made as a frontend practice build.</p>
-    <p class="foot__credit">Photos: NewJeans concept archive (ADOR permission). Facts: public sources.</p>
+    <p class="foot__credit">Photos: compiled from public fan archives (kprofiles.com). Facts: public sources.</p>
     <p class="foot__sig">NEWJEANS · <span id="foot-year"></span></p>
   </footer>
 

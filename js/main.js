@@ -40,8 +40,9 @@
   /* ---------- render: members (each links to its profile page) ---------- */
   var membersRow = document.getElementById('members-row');
   if (membersRow && NJ.members) {
-    NJ.members.forEach(function (m) {
-      var li = el('li', 'member');
+    NJ.members.forEach(function (m, i) {
+      var li = el('li', 'member reveal');
+      li.style.setProperty('--i', i);
       li.style.setProperty('--tilt', tilt(m.name.length) + 'deg');
       if (m.tone) li.style.setProperty('--tone', m.tone);
       li.innerHTML =
@@ -62,8 +63,9 @@
   var relList = document.getElementById('releases-list');
   function norm(s) { return String(s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
   if (relList && NJ.releases) {
-    NJ.releases.forEach(function (r) {
+    NJ.releases.forEach(function (r, i) {
       var li = el('li', 'release reveal');
+      li.style.setProperty('--i', i);
       // does a preview exist whose title starts with this release title?
       var pv = (window.NJ_PREVIEWS || []).find(function (p) {
         return norm(p.track) === norm(r.title) || norm(p.track).indexOf(norm(r.title)) === 0;
@@ -121,10 +123,13 @@
 
   function fill(list, n) {
     var frag = document.createDocumentFragment();
+    var start = shown;
     for (var i = shown; i < Math.min(list.length, shown + n); i++) {
       var p = list[i];
-      var li = el('li', 'shot');
+      var li = el('li', 'shot reveal');
       li.style.setProperty('--tilt', tilt(i) + 'deg');
+      // stagger within this batch only, so the delay never grows huge
+      li.style.setProperty('--i', (i - start) % 12);
       var label = memberLabel(p.cat) + ' · ' + String(i + 1).padStart(3, '0');
       var btn = el('button', 'shot__btn');
       btn.type = 'button';
@@ -138,6 +143,7 @@
     }
     grid.appendChild(frag);
     shown += n;
+    bindReveal();
   }
 
   function currentList() {

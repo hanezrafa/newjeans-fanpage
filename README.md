@@ -9,10 +9,10 @@ practice project. It is **plain HTML + CSS + JavaScript** (no framework, no buil
 |---------|----------|
 | Hero | A board of pinned photos + large wordmark + fact strip |
 | About | Group intro |
-| Members | 5 members (horizontal scroll) — each links to a full profile page |
+| Members | 5 members (3 across, 2 below), each linking to a full profile page |
 | Discography | 10 releases, with a playable 30-second preview per track |
 | Eras | A colour timeline of the group's eras, 2022 to 2024 |
-| Gallery | 276 concept photos, filterable by member, with a lightbox |
+| Gallery | 261 concept photos, filterable by member, with a lightbox |
 
 ### Member profile pages
 
@@ -43,10 +43,12 @@ height, MBTI, colour), prev/next member links, and that member's own photo board
 │  ├─ audio.js          # playable discography
 │  ├─ member.js         # builds a member profile from <body data-member>
 │  └─ immersive.js      # cursor, beads, parallax, view transitions
-└─ assets/photos/       # 276 NewJeans concept photos
+└─ assets/photos/       # 261 NewJeans concept photos
 ```
 
 ## Notes
 
-- Every fact is public and verifiable; no news, rumours, or legal-dispute content.
+- Facts are drawn from public sources (Wikipedia, chart archives); the page avoids
+  news, rumours and day-to-day dispute coverage, and states contract status only
+  where it is settled and public.
 - No backend, no accounts, no tracking. Fully static.

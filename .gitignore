@@ -17,3 +17,6 @@ Thumbs.db
 .DS_Store
 desktop.ini
 server.err
+
+# Leftover scrape manifest (not used by the site)
+assets/photos/manifest.json
