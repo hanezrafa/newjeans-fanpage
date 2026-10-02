@@ -46,17 +46,6 @@ height, MBTI, colour), prev/next member links, and that member's own photo board
 └─ assets/photos/       # 276 NewJeans concept photos
 ```
 
-## Sources and permissions
-
-- **Photos:** 276 NewJeans concept photos downloaded from a public archive
-  (`kprofiles.com/newjeans-concept-photos-archive/`).
-  > The project owner states they have obtained permission from **ADOR** to use
-  > these photos. Keep the proof of permission (the email) outside this repo as
-  > documentation.
-- **Group facts** (names, label, debut, discography): public sources
-  (Wikipedia, NewJeans).
-- This site is **fan-made and not affiliated** with NewJeans, ADOR, or HYBE.
-
 ## Notes
 
 - Every fact is public and verifiable; no news, rumours, or legal-dispute content.
