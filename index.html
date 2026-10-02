@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewJeans · Fan Board</title>
+  <meta name="description" content="A NewJeans fan board: member profiles, discography and concept photo gallery. Unofficial fan page." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#board">Skip to board</a>
+
+  <!-- Y2K custom cursor + trailing bead -->
+  <div class="y2k-cursor" id="y2k-cursor" aria-hidden="true">
+    <span class="y2k-cursor__dot"></span>
+    <span class="y2k-cursor__ring"></span>
+  </div>
+
+  <!-- Powerpuff bead field (pink / blue / lime) -->
+  <div class="beadfield" id="beadfield" aria-hidden="true"></div>
+
+  <!-- pixel grain + scanline (screen texture) -->
+  <div class="screen-fx" aria-hidden="true">
+    <div class="screen-fx__grain"></div>
+    <div class="screen-fx__scan"></div>
+  </div>
+
+  <!-- Taped header label -->
+  <header class="topbar" aria-label="NewJeans fan board">
+    <span class="topbar__tape">FAN BOARD</span>
+    <span class="topbar__name">NEWJEANS</span>
+    <nav class="topbar__nav">
+      <a href="#members">Members</a>
+      <a href="#releases">Music</a>
+      <a href="#eras">Eras</a>
+      <a href="#gallery">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ FIRST VIEWPORT: the board ============ -->
+    <section class="hero" id="board" aria-labelledby="hero-title">
+      <div class="hero__pinwall" aria-hidden="true">
+        <figure class="print print--a" data-depth="0.18"><img src="assets/photos/NewJeans-21.png" alt="" loading="eager" /></figure>
+        <figure class="print print--b" data-depth="0.42"><img src="assets/photos/HANNI-12.png" alt="" loading="eager" /></figure>
+        <figure class="print print--c" data-depth="0.30"><img src="assets/photos/MINJI-12.png" alt="" loading="eager" /></figure>
+        <figure class="print print--d" data-depth="0.55"><img src="assets/photos/HAERIN-7.png" alt="" loading="eager" /></figure>
+        <figure class="print print--e" data-depth="0.24"><img src="assets/photos/DANIELLE-2.png" alt="" loading="eager" /></figure>
+        <figure class="print print--f" data-depth="0.48"><img src="assets/photos/HYEIN-3.png" alt="" loading="eager" /></figure>
+        <!-- spinning Y2K stickers -->
+        <span class="sticker sticker--1">NEW&nbsp;JEANS</span>
+        <span class="sticker sticker--2">BUNNIES</span>
+        <span class="sticker sticker--3">★</span>
+      </div>
+
+      <div class="hero__center" data-depth="0.10">
+        <p class="hero__kicker">Street snap archive</p>
+        <h1 id="hero-title" class="hero__title" aria-label="NewJeans">
+          <span aria-hidden="true" class="hero__word">
+            <span class="lt lt1">N</span><span class="lt lt2">E</span><span class="lt lt3">W</span><span class="lt lt4">J</span><span class="lt lt5">E</span><span class="lt lt6">A</span><span class="lt lt7">N</span><span class="lt lt8">S</span>
+          </span>
+        </h1>
+        <p class="hero__sub">뉴진스 · Fan-made board</p>
+        <a class="hero__cta" href="#gallery">Open Gallery</a>
+      </div>
+
+      <ul class="hero__strip" aria-label="Quick facts">
+        <li>Debut 2022</li>
+        <li>5 Members</li>
+        <li>ADOR</li>
+        <li>Bunnies</li>
+      </ul>
+    </section>
+
+    <!-- ============ running ticker ============ -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>NewJeans</span><span>●</span><span>Minji</span><span>●</span><span>Hanni</span><span>●</span><span>Danielle</span><span>●</span><span>Haerin</span><span>●</span><span>Hyein</span><span>●</span><span>Bunnies</span><span>●</span><span>ADOR</span><span>●</span>
+        <span>NewJeans</span><span>●</span><span>Minji</span><span>●</span><span>Hanni</span><span>●</span><span>Danielle</span><span>●</span><span>Haerin</span><span>●</span><span>Hyein</span><span>●</span><span>Bunnies</span><span>●</span><span>ADOR</span><span>●</span>
+      </div>
+    </div>
+
+    <!-- ============ INTRO ============ -->
+    <section class="intro" aria-labelledby="intro-h">
+      <h2 id="intro-h" class="section-num"><span>01</span> About</h2>
+      <div class="intro__body">
+        <p class="intro__lead">NewJeans changed how a K-pop girl group can look: no gimmicks, just music and a calm image.</p>
+        <p class="intro__text" id="intro-text"></p>
+      </div>
+    </section>
+
+    <!-- ============ MEMBERS ============ -->
+    <section class="members" id="members" aria-labelledby="members-h">
+      <h2 id="members-h" class="section-num"><span>02</span> Members</h2>
+      <p class="members__hint">Scroll to see them all →</p>
+      <ul class="members__row" id="members-row" role="list"></ul>
+    </section>
+
+    <!-- ============ RELEASES (playable) ============ -->
+    <section class="releases" id="releases" aria-labelledby="releases-h">
+      <h2 id="releases-h" class="section-num"><span>03</span> Discography</h2>
+
+      <!-- Y2K CD player: shows the track now playing -->
+      <div class="nowplaying" id="nowplaying" hidden>
+        <div class="nowplaying__disc" id="np-disc" aria-hidden="true">
+          <img id="np-art" src="favicon.png" alt="" />
+        </div>
+        <div class="nowplaying__meta">
+          <span class="nowplaying__label">Now playing</span>
+          <span class="nowplaying__track" id="np-track"></span>
+          <span class="nowplaying__album" id="np-album"></span>
+        </div>
+        <div class="nowplaying__eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <button class="nowplaying__stop" id="np-stop" type="button">Stop</button>
+      </div>
+
+      <p class="releases__hint" id="releases-hint">Tap a track to hear a 30-second preview (needs internet).</p>
+      <ol class="releases__list" id="releases-list"></ol>
+    </section>
+
+    <!-- ============ ERA TIMELINE ============ -->
+    <section class="eras" id="eras" aria-labelledby="eras-h">
+      <h2 id="eras-h" class="section-num"><span>04</span> Eras</h2>
+      <ol class="eras__line" id="eras-line"></ol>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section class="gallery" id="gallery" aria-labelledby="gallery-h">
+      <h2 id="gallery-h" class="section-num"><span>05</span> Gallery</h2>
+
+      <div class="gallery__filters" id="gallery-filters" role="tablist" aria-label="Gallery filter">
+        <button class="tape-btn is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="tape-btn" role="tab" aria-selected="false" data-filter="group">Group</button>
+        <button class="tape-btn" role="tab" aria-selected="false" data-filter="MINJI">Minji</button>
+        <button class="tape-btn" role="tab" aria-selected="false" data-filter="HANNI">Hanni</button>
+        <button class="tape-btn" role="tab" aria-selected="false" data-filter="DANIELLE">Danielle</button>
+        <button class="tape-btn" role="tab" aria-selected="false" data-filter="HAERIN">Haerin</button>
+        <button class="tape-btn" role="tab" aria-selected="false" data-filter="HYEIN">Hyein</button>
+      </div>
+
+      <ul class="gallery__grid" id="gallery-grid" role="list"></ul>
+      <p class="gallery__note" id="gallery-note"></p>
+      <button class="load-more" id="load-more" type="button">Load more</button>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot__note">Unofficial fan page. Made as a frontend practice build.</p>
+    <p class="foot__credit">Photos: NewJeans concept archive (ADOR permission). Facts: public sources.</p>
+    <p class="foot__sig">NEWJEANS · <span id="foot-year"></span></p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" id="lb-close" aria-label="Close">×</button>
+    <button class="lightbox__prev" id="lb-prev" aria-label="Previous">‹</button>
+    <figure class="lightbox__fig">
+      <img id="lb-img" src="assets/photos/NewJeans-21.png" alt="" />
+      <figcaption id="lb-cap"></figcaption>
+    </figure>
+    <button class="lightbox__next" id="lb-next" aria-label="Next">›</button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/previews.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/immersive.js"></script>
+</body>
+</html>

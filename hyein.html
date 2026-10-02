@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hyein · NewJeans Fan Board</title>
+  <meta name="description" content="Hyein of NewJeans: profile, facts and concept photos. Unofficial fan page." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/member.css" />
+</head>
+<body data-member="hyein">
+  <a class="skip-link" href="#profile">Skip to profile</a>
+
+  <header class="topbar" aria-label="NewJeans fan board">
+    <a class="topbar__name" href="index.html">NEWJEANS</a>
+    <nav class="topbar__nav">
+      <a href="index.html#members">Members</a>
+      <a href="index.html#releases">Music</a>
+      <a href="index.html#gallery">Gallery</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="profile-shell" style="padding:0 var(--pad)">
+      <a class="backlink" href="index.html#members">← All members</a>
+    </div>
+
+    <section class="profile" id="profile" aria-labelledby="pf-name">
+      <figure class="profile__portrait">
+        <img id="pf-portrait" src="favicon.png" alt="" />
+      </figure>
+
+      <div class="profile__meta">
+        <p class="profile__eyebrow" id="pf-eyebrow"></p>
+        <h1 class="profile__name" id="pf-name"></h1>
+        <p class="profile__hangul" id="pf-hangul"></p>
+        <p class="profile__blurb" id="pf-blurb"></p>
+        <p class="profile__bio" id="pf-bio"></p>
+        <ul class="profile__facts" id="pf-facts"></ul>
+        <nav class="profile__nav" id="pf-nav" aria-label="Member navigation"></nav>
+      </div>
+    </section>
+
+    <section class="profile-gallery" aria-labelledby="pf-gal-h">
+      <h2 id="pf-gal-h" class="section-num"><span>The board</span> <span id="pf-count"></span></h2>
+      <ul class="profile-gallery__grid" id="pf-grid" role="list"></ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot__note">Unofficial fan page. Made as a frontend practice build.</p>
+    <p class="foot__credit">Photos: NewJeans concept archive (ADOR permission). Facts: public sources.</p>
+    <p class="foot__sig">NEWJEANS · <span id="foot-year"></span></p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/member.js"></script>
+  <script>document.getElementById('foot-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
