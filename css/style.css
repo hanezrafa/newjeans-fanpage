@@ -42,6 +42,8 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  /* anchor for the absolute bead field, so it spans the whole page */
+  position: relative;
   background-color: var(--board);
   color: var(--ink);
   font-family: var(--font-body);
@@ -684,9 +686,15 @@ main { display: block; }
 }
 
 /* ---------- Powerpuff bead field ---------- */
+/* the bead field is a normal part of the page, so it scrolls with the
+   content (scroll down, the beads travel up) instead of sticking to the
+   screen. It sits behind the content as a soft background layer. */
 .beadfield {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;

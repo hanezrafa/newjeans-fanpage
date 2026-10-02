@@ -55,36 +55,68 @@
     if (!field || reduce) return;
 
     var KINDS = ['blossom', 'bubbles', 'buttercup'];
-    var COUNT = finePointer ? 12 : 8;
     var beads = [];
-    var mx = -9999, my = -9999;
+    var mx = -9999, my = -9999;   // pointer, in document coordinates
 
-    for (var i = 0; i < COUNT; i++) {
-      var b = document.createElement('span');
-      var kind = KINDS[i % 3];
-      b.className = 'bead bead--' + kind;
-      var size = 10 + Math.random() * 22;
-      b.style.width = size + 'px';
-      b.style.height = size + 'px';
-      field.appendChild(b);
-      var hx = Math.random() * window.innerWidth;
-      var hy = Math.random() * window.innerHeight;
-      beads.push({
-        el: b,
-        homeX: hx, homeY: hy,   // the spot the bead returns to
-        x: hx, y: hy,           // current (pushed) spot
-        r: size / 2
-      });
+    // the field scrolls with the page, so scatter the beads down the whole
+    // document, not just the first screen
+    function pageH() { return Math.max(document.documentElement.scrollHeight, window.innerHeight); }
+    var vh = window.innerHeight;
+    var COUNT = Math.round(pageH() / vh) * (finePointer ? 12 : 8);
+
+    function build() {
+      field.innerHTML = '';
+      beads.length = 0;
+      var w = document.documentElement.clientWidth;
+      var h = pageH() - 40;
+      for (var i = 0; i < COUNT; i++) {
+        var b = document.createElement('span');
+        var kind = KINDS[i % 3];
+        b.className = 'bead bead--' + kind;
+        var size = 10 + Math.random() * 22;
+        b.style.width = size + 'px';
+        b.style.height = size + 'px';
+        field.appendChild(b);
+        var hx = Math.random() * w;
+        var hy = 20 + Math.random() * h;
+        beads.push({
+          el: b,
+          homeX: hx, homeY: hy,   // the spot the bead returns to (document coords)
+          x: hx, y: hy,           // current (pushed) spot
+          r: size / 2
+        });
+      }
     }
+    build();
 
     if (finePointer) {
-      document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; });
+      document.addEventListener('mousemove', function (e) {
+        // beads live in document space, so fold in the scroll offset
+        mx = e.clientX + window.scrollX;
+        my = e.clientY + window.scrollY;
+      });
     }
 
     var paused = false;
     document.addEventListener('visibilitychange', function () {
       paused = document.hidden;
     });
+
+    // the first pass can run before the page has its full height (fonts,
+    // images). once everything is loaded, and on resize, re-scatter so the
+    // bead count matches the real page length.
+    var lastH = pageH();
+    function resettle() {
+      var nh = pageH();
+      if (nh !== lastH) {
+        lastH = nh;
+        COUNT = Math.round(nh / vh) * (finePointer ? 12 : 8);
+        build();
+      }
+    }
+    window.addEventListener('resize', resettle, { passive: true });
+    window.addEventListener('load', resettle);
+    setTimeout(resettle, 400);
 
     (function loop() {
       requestAnimationFrame(loop);
