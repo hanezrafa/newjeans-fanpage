@@ -165,15 +165,15 @@ var NJ = {
   // Era timeline. Each era carries a colour drawn from its own release art,
   // so the 2022 to 2024 story reads as a spectrum, not a grey list.
   eras: [
-    { id: 'debut', year: '2022', title: 'New Jeans', tone: '#8cc6ff',
+    { id: 'debut', year: '2022', title: 'New Jeans', tone: '#8cc6ff', bg: 'assets/eras/era-newjeans.jpg',
       blurb: 'A surprise debut with no promotion: "Attention", then "Hype Boy" and "Cookie". The EP sold a million copies and set the calm, Y2K look the group is known for.' },
-    { id: 'omg', year: '2023', title: 'OMG', tone: '#b7a6ff',
+    { id: 'omg', year: '2023', title: 'OMG', tone: '#b7a6ff', bg: 'assets/eras/era-omg.jpg',
       blurb: '"Ditto" and "OMG" took the winter. "Ditto" held the top of the Circle chart for thirteen weeks and became their first Billboard Hot 100 entry.' },
-    { id: 'getup', year: '2023', title: 'Get Up', tone: '#ff8fc4',
+    { id: 'getup', year: '2023', title: 'Get Up', tone: '#ff8fc4', bg: 'assets/eras/era-getup.jpg',
       blurb: 'The second EP went to number one on the Billboard 200. "Super Shy", "ETA" and "Cool with You" all charted at once, a first for a K-pop female act.' },
-    { id: 'howsweet', year: '2024', title: 'How Sweet', tone: '#b7e46a',
+    { id: 'howsweet', year: '2024', title: 'How Sweet', tone: '#b7e46a', bg: 'assets/eras/era-howsweet.jpg',
       blurb: 'A softer, spring-set single with B-side "Bubble Gum", before a full Japanese debut cycle began.' },
-    { id: 'supernatural', year: '2024', title: 'Supernatural', tone: '#ffc978',
+    { id: 'supernatural', year: '2024', title: 'Supernatural', tone: '#ffc978', bg: 'assets/eras/era-supernatural.jpg',
       blurb: 'Their official Japanese debut, with "Right Now" as its B-side, and a fan meeting at the Tokyo Dome.' }
   ]
 };

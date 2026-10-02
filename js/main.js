@@ -85,9 +85,10 @@
       var li = el('li', 'era reveal');
       li.style.setProperty('--tone', e.tone);
       li.style.setProperty('--i', i);
+      var bgStyle = e.bg ? ' style="background-image:url(\'' + e.bg + '\')"' : '';
       li.innerHTML =
         '<span class="era__dot" aria-hidden="true"></span>' +
-        '<div class="era__card">' +
+        '<div class="era__card"' + bgStyle + '>' +
           '<span class="era__year">' + esc(e.year) + '</span>' +
           '<h3 class="era__title">' + esc(e.title) + '</h3>' +
           '<p class="era__blurb">' + esc(e.blurb) + '</p>' +
