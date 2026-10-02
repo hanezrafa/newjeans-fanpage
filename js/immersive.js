@@ -1,8 +1,8 @@
 /* =========================================================
    NewJeans fan page - immersive layer (Y2K / Powerpuff)
-   A custom bead cursor, a still field of pink / blue / lime
-   beads that only push away from the pointer, hero parallax, and
-   a smooth section-jump via the View Transitions API.
+   A custom bead cursor, a floating field of pink / blue / lime
+   beads that drift gently and push away from the pointer, hero
+   parallax, and a smooth section-jump via the View Transitions API.
 
    Everything is CSS/JS authored - no third-party art. All of it
    is skipped under prefers-reduced-motion and on touch devices.
@@ -81,9 +81,13 @@
         var hy = 20 + Math.random() * h;
         beads.push({
           el: b,
-          homeX: hx, homeY: hy,   // the spot the bead returns to (document coords)
+          homeX: hx, homeY: hy,   // the spot the bead floats around (document coords)
           x: hx, y: hy,           // current (pushed) spot
-          r: size / 2
+          r: size / 2,
+          // each bead drifts on its own gentle path, so the field feels alive
+          amp: 6 + Math.random() * 14,       // how far it wanders
+          spd: 0.25 + Math.random() * 0.4,   // how fast
+          ph: Math.random() * Math.PI * 2     // start phase, so they are out of step
         });
       }
     }
@@ -118,12 +122,21 @@
     window.addEventListener('load', resettle);
     setTimeout(resettle, 400);
 
-    (function loop() {
+    var t0 = performance.now();
+    (function loop(now) {
       requestAnimationFrame(loop);
       if (paused) return;
+      var t = (now - t0) / 1000;
       for (var i = 0; i < beads.length; i++) {
         var o = beads[i];
-        // push away from the pointer, then spring back to the home spot
+        // gentle float around the home spot, from a sine path so it never
+        // wanders off; the home stays fixed so scroll behaviour is unchanged
+        var fx = o.homeX + Math.sin(t * o.spd + o.ph) * o.amp;
+        var fy = o.homeY + Math.cos(t * o.spd * 0.8 + o.ph) * o.amp * 0.7;
+        // ease the bead towards that moving float point
+        o.x += (fx - o.x) * 0.06;
+        o.y += (fy - o.y) * 0.06;
+        // push away from the pointer
         var ddx = o.x - mx, ddy = o.y - my;
         var d2 = ddx * ddx + ddy * ddy;
         if (d2 < 16000 && d2 > 0.01) {
@@ -132,12 +145,9 @@
           o.x += (ddx / d) * force;
           o.y += (ddy / d) * force;
         }
-        // settle back home, so with no pointer nearby the beads are still
-        o.x += (o.homeX - o.x) * 0.045;
-        o.y += (o.homeY - o.y) * 0.045;
         o.el.style.transform = 'translate(' + o.x.toFixed(1) + 'px,' + o.y.toFixed(1) + 'px)';
       }
-    })();
+    })(t0);
   }
 
   /* ---------------------------------------------------------
