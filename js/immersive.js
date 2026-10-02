@@ -67,12 +67,12 @@
       b.style.width = size + 'px';
       b.style.height = size + 'px';
       field.appendChild(b);
+      var hx = Math.random() * window.innerWidth;
+      var hy = Math.random() * window.innerHeight;
       beads.push({
         el: b,
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
+        homeX: hx, homeY: hy,   // the spot the bead returns to
+        x: hx, y: hy,           // current (pushed) spot
         r: size / 2
       });
     }
@@ -89,12 +89,9 @@
     (function loop() {
       requestAnimationFrame(loop);
       if (paused) return;
-      var w = window.innerWidth, h = window.innerHeight;
       for (var i = 0; i < beads.length; i++) {
         var o = beads[i];
-        // drift
-        o.x += o.vx; o.y += o.vy;
-        // repel from the pointer
+        // push away from the pointer, then spring back to the home spot
         var ddx = o.x - mx, ddy = o.y - my;
         var d2 = ddx * ddx + ddy * ddy;
         if (d2 < 16000 && d2 > 0.01) {
@@ -103,10 +100,10 @@
           o.x += (ddx / d) * force;
           o.y += (ddy / d) * force;
         }
-        // wrap the viewport
-        if (o.x < -40) o.x = w + 40; else if (o.x > w + 40) o.x = -40;
-        if (o.y < -40) o.y = h + 40; else if (o.y > h + 40) o.y = -40;
-        o.el.style.transform = 'translate(' + o.x + 'px,' + o.y + 'px)';
+        // settle back home, so with no pointer nearby the beads are still
+        o.x += (o.homeX - o.x) * 0.045;
+        o.y += (o.homeY - o.y) * 0.045;
+        o.el.style.transform = 'translate(' + o.x.toFixed(1) + 'px,' + o.y.toFixed(1) + 'px)';
       }
     })();
   }
