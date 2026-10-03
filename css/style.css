@@ -275,15 +275,7 @@ main { position: relative; z-index: 1; }
   .hero__word { transition: filter 0.35s ease; }
   .hero__title.is-goo .hero__word { filter: url(#goo); }
 }
-/* scroll distortion: headings ripple as they enter, then settle */
-.warp-in { animation: warp-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
-@keyframes warp-settle {
-  0% { filter: url(#warp); letter-spacing: 0.06em; opacity: 0.25; }
-  70% { filter: url(#warp); opacity: 1; }
-  100% { filter: none; letter-spacing: normal; opacity: 1; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .warp-in { animation: none; }
   .hero__title.is-goo .hero__word { filter: none; }
 }
 .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }

@@ -369,27 +369,6 @@
   }
 
   /* ---------------------------------------------------------
-     Scroll distortion: big headings ripple into place as they enter
-     --------------------------------------------------------- */
-  function initWarpHeadings() {
-    if (reduce || !('IntersectionObserver' in window)) return;
-    var heads = document.querySelectorAll('.hero__word, .section-num, .profile__name, .profile__signature');
-    if (!heads.length) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          var el = en.target;
-          el.classList.add('warp-in');
-          // clear the class after it plays so it can replay if scrolled back into view
-          setTimeout(function () { el.classList.remove('warp-in'); }, 1100);
-          io.unobserve(el);
-        }
-      });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
-    heads.forEach(function (h) { io.observe(h); });
-  }
-
-  /* ---------------------------------------------------------
      Drag-to-explore: each polaroid can be pulled off its pin and
      moved on its own, like rearranging a real cork board. Grab one
      photo, drag it, and it stays where you left it. Double-click a
@@ -475,7 +454,6 @@
     initScrollProgress();
     initRipple();
     initBurst();
-    initWarpHeadings();
     initDragBoard();
     initGooey();
   }
