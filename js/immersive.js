@@ -390,56 +390,62 @@
   }
 
   /* ---------------------------------------------------------
-     Drag-to-explore: the hero pinwall can be nudged like a real
-     cork board. Pointer drag moves it; it eases to a clamp so it
-     never flies off. Skipped on touch (native scroll wins) and reduced.
+     Drag-to-explore: each polaroid can be pulled off its pin and
+     moved on its own, like rearranging a real cork board. Grab one
+     photo, drag it, and it stays where you left it. Double-click a
+     photo to send it home. Pointer devices only; skipped under reduced.
      --------------------------------------------------------- */
   function initDragBoard() {
     if (reduce || !finePointer) return;
+    var prints = document.querySelectorAll('.hero__pinwall .print');
+    if (!prints.length) return;
     var board = document.querySelector('.hero__pinwall');
-    if (!board) return;
-    var LIMIT = 150; // how far the board may be pushed, in px
-    var x = 0, y = 0, tx = 0, ty = 0;
-    var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0, lastDown = 0;
+    if (board) board.classList.add('is-draggable');
 
-    board.classList.add('is-draggable');
+    prints.forEach(function (p) {
+      var x = 0, y = 0, tx = 0, ty = 0;      // eased current + target offset
+      var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0, lastDown = 0;
 
-    board.addEventListener('pointerdown', function (e) {
-      if (e.button !== 0) return;
-      // a quick second press = reset to centre (pointer capture eats dblclick)
-      var now = performance.now();
-      if (now - lastDown < 320) { tx = 0; ty = 0; lastDown = 0; return; }
-      lastDown = now;
-      dragging = true;
-      sx = e.clientX; sy = e.clientY; ox = x; oy = y;
-      board.classList.add('is-grabbing');
-      board.setPointerCapture && board.setPointerCapture(e.pointerId);
+      p.classList.add('is-draggable');
+      p.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0) return;
+        var now = performance.now();
+        // a quick second press sends this photo home
+        if (now - lastDown < 320) { tx = 0; ty = 0; lastDown = 0; return; }
+        lastDown = now;
+        dragging = true;
+        sx = e.clientX; sy = e.clientY; ox = x; oy = y;
+        p.classList.add('is-grabbing');
+        p.style.zIndex = 5;
+        p.setPointerCapture && p.setPointerCapture(e.pointerId);
+        e.preventDefault();
+      });
+      p.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        tx = ox + (e.clientX - sx);
+        ty = oy + (e.clientY - sy);
+      });
+      function end(e) {
+        if (!dragging) return;
+        dragging = false;
+        p.classList.remove('is-grabbing');
+        p.style.zIndex = '';
+        if (p.releasePointerCapture && p.hasPointerCapture && p.hasPointerCapture(e.pointerId)) p.releasePointerCapture(e.pointerId);
+      }
+      p.addEventListener('pointerup', end);
+      p.addEventListener('pointercancel', end);
+      // double-click also sends it home
+      p.addEventListener('dblclick', function () { tx = 0; ty = 0; });
+
+      (function loop() {
+        requestAnimationFrame(loop);
+        // ease toward the target; the photo stays where it is left
+        x += (tx - x) * 0.16; y += (ty - y) * 0.16;
+        if (Math.abs(x - tx) < 0.05 && Math.abs(y - ty) < 0.05) { x = tx; y = ty; }
+        p.style.setProperty('--dx', x.toFixed(2) + 'px');
+        p.style.setProperty('--dy', y.toFixed(2) + 'px');
+      })();
     });
-    board.addEventListener('pointermove', function (e) {
-      if (!dragging) return;
-      tx = Math.max(-LIMIT, Math.min(LIMIT, ox + (e.clientX - sx)));
-      ty = Math.max(-LIMIT, Math.min(LIMIT, oy + (e.clientY - sy)));
-    });
-    function end(e) {
-      if (!dragging) return;
-      dragging = false;
-      board.classList.remove('is-grabbing');
-      board.releasePointerCapture && e.pointerId != null && board.hasPointerCapture && board.hasPointerCapture(e.pointerId) && board.releasePointerCapture(e.pointerId);
-    }
-    board.addEventListener('pointerup', end);
-    board.addEventListener('pointercancel', end);
-    // double-click springs the board back to centre
-    board.addEventListener('dblclick', function () { tx = 0; ty = 0; });
-
-    (function loop() {
-      requestAnimationFrame(loop);
-      // while dragging, follow the pointer; otherwise KEEP the last spot
-      // (double-click the board to spring it back to centre)
-      x += (tx - x) * 0.12; y += (ty - y) * 0.12;
-      if (Math.abs(x) < 0.05 && Math.abs(y) < 0.05 && !dragging) x = y = 0;
-      board.style.setProperty('--dragx', x.toFixed(2) + 'px');
-      board.style.setProperty('--dragy', y.toFixed(2) + 'px');
-    })();
   }
 
   function boot() {

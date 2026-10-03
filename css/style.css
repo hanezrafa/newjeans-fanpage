@@ -206,20 +206,11 @@ main { position: relative; z-index: 1; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  transform: translate(var(--dragx, 0px), var(--dragy, 0px));
 }
-/* when the board is draggable (fine pointer), let it catch the grab but
-   keep the hero text/CTA above it interactive */
-.hero__pinwall.is-draggable {
-  pointer-events: auto;
-  cursor: grab;
-  touch-action: none;
-}
-.hero__pinwall.is-grabbing { cursor: grabbing; }
-/* the prints lift slightly while the board is held, so the drag reads */
-.hero__pinwall.is-grabbing .print {
-  box-shadow: 0 22px 40px -18px rgba(20, 22, 28, 0.5);
-}
+/* each polaroid can be dragged on its own */
+.hero__pinwall.is-draggable { pointer-events: none; }
+.print.is-draggable { pointer-events: auto; cursor: grab; touch-action: none; }
+.print.is-grabbing { cursor: grabbing; }
 .hero__center { position: relative; z-index: 2; }
 /* a small hint that the board can be dragged (pointer devices only) */
 .hero__drag-hint {
@@ -911,7 +902,7 @@ main { display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* parallax prints translate via a CSS var set from JS */
-.print { transform: rotate(var(--rot, 0deg)) translate3d(0, var(--py, 0px), 0); }
+.print { transform: translate(var(--dx, 0px), calc(var(--dy, 0px) + var(--py, 0px))) rotate(var(--rot, 0deg)); }
 
 /* ---------- running ticker ---------- */
 .ticker {
