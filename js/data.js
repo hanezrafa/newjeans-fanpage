@@ -43,8 +43,8 @@ var NJ = {
         ['MBTI', 'ESTJ'],
         ['Colour', 'Blue']
       ],
-      photo: 'MINJI-12.png',
-      silhouette: 'MINJI-1-2.png'
+      photo: 'MINJI-12.webp',
+      silhouette: 'MINJI-1-2.webp'
     },
     {
       id: 'hanni',
@@ -68,8 +68,8 @@ var NJ = {
         ['MBTI', 'INFP'],
         ['Colour', 'Pink']
       ],
-      photo: 'HANNI-12.png',
-      silhouette: 'HANNI-2-2.png'
+      photo: 'HANNI-12.webp',
+      silhouette: 'HANNI-2-2.webp'
     },
     {
       id: 'danielle',
@@ -93,8 +93,8 @@ var NJ = {
         ['MBTI', 'ENFP'],
         ['Colour', 'Yellow']
       ],
-      photo: 'DANIELLE-2-4.png',
-      silhouette: 'DANIELLE-1-2.png'
+      photo: 'DANIELLE-2-4.webp',
+      silhouette: 'DANIELLE-1-2.webp'
     },
     {
       id: 'haerin',
@@ -118,8 +118,8 @@ var NJ = {
         ['Colour', 'Green'],
         ['Emoji', '🐱']
       ],
-      photo: 'HAERIN-7.png',
-      silhouette: 'HAERIN-1-1.png'
+      photo: 'HAERIN-7.webp',
+      silhouette: 'HAERIN-1-1.webp'
     },
     {
       id: 'hyein',
@@ -143,8 +143,8 @@ var NJ = {
         ['MBTI', 'ISFP'],
         ['Colour', 'Purple']
       ],
-      photo: 'HYEIN-3.png',
-      silhouette: 'HYEIN-1-2.png'
+      photo: 'HYEIN-3.webp',
+      silhouette: 'HYEIN-1-2.webp'
     }
   ],
 
@@ -165,15 +165,15 @@ var NJ = {
   // Era timeline. Each era carries a colour drawn from its own release art,
   // so the 2022 to 2024 story reads as a spectrum, not a grey list.
   eras: [
-    { id: 'debut', year: '2022', title: 'New Jeans', tone: '#8cc6ff', bg: 'assets/eras/era-newjeans.jpg',
+    { id: 'debut', year: '2022', title: 'New Jeans', tone: '#8cc6ff', bg: 'assets/eras/era-newjeans.webp',
       blurb: 'A surprise debut with no promotion: "Attention", then "Hype Boy" and "Cookie". The EP sold a million copies and set the calm, Y2K look the group is known for.' },
-    { id: 'omg', year: '2023', title: 'OMG', tone: '#b7a6ff', bg: 'assets/eras/era-omg.jpg',
+    { id: 'omg', year: '2023', title: 'OMG', tone: '#b7a6ff', bg: 'assets/eras/era-omg.webp',
       blurb: '"Ditto" and "OMG" took the winter. "Ditto" held the top of the Circle chart for thirteen weeks and became their first Billboard Hot 100 entry.' },
-    { id: 'getup', year: '2023', title: 'Get Up', tone: '#ff8fc4', bg: 'assets/eras/era-getup.jpg',
+    { id: 'getup', year: '2023', title: 'Get Up', tone: '#ff8fc4', bg: 'assets/eras/era-getup.webp',
       blurb: 'The second EP went to number one on the Billboard 200. "Super Shy", "ETA" and "Cool with You" all charted at once, a first for a K-pop female act.' },
-    { id: 'howsweet', year: '2024', title: 'How Sweet', tone: '#b7e46a', bg: 'assets/eras/era-howsweet.jpg',
+    { id: 'howsweet', year: '2024', title: 'How Sweet', tone: '#b7e46a', bg: 'assets/eras/era-howsweet.webp',
       blurb: 'A softer, spring-set single with B-side "Bubble Gum", before a full Japanese debut cycle began.' },
-    { id: 'supernatural', year: '2024', title: 'Supernatural', tone: '#ffc978', bg: 'assets/eras/era-supernatural.jpg',
+    { id: 'supernatural', year: '2024', title: 'Supernatural', tone: '#ffc978', bg: 'assets/eras/era-supernatural.webp',
       blurb: 'Their official Japanese debut, with "Right Now" as its B-side, and a fan meeting at the Tokyo Dome.' }
   ],
 
@@ -181,8 +181,8 @@ var NJ = {
   // silhouette art). The galleries drop them, so the same shot is not shown
   // twice. The hero pinboard uses its own group shots and is NOT listed here.
   featured: [
-    'MINJI-12.png', 'HANNI-12.png', 'DANIELLE-2-4.png', 'HAERIN-7.png', 'HYEIN-3.png',
-    'MINJI-1-2.png', 'HANNI-2-2.png', 'DANIELLE-1-2.png', 'HAERIN-1-1.png', 'HYEIN-1-2.png'
+    'MINJI-12.webp', 'HANNI-12.webp', 'DANIELLE-2-4.webp', 'HAERIN-7.webp', 'HYEIN-3.webp',
+    'MINJI-1-2.webp', 'HANNI-2-2.webp', 'DANIELLE-1-2.webp', 'HAERIN-1-1.webp', 'HYEIN-1-2.webp'
   ]
 };
 

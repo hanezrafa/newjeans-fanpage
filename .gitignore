@@ -23,3 +23,15 @@ assets/photos/manifest.json
 
 # Agent notes kept on disk but not published
 AGENTS.md
+
+# Source images: the site ships WebP only. Keep the originals on disk but
+# do not push the heavy PNG/JPG files.
+assets/photos/*.png
+assets/photos/*.jpg
+assets/photos/*.jpeg
+assets/eras/*.png
+assets/eras/*.jpg
+assets/eras/*.jpeg
+
+# Python cache
+__pycache__/
