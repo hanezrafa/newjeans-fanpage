@@ -222,14 +222,19 @@
      --------------------------------------------------------- */
   function initTilt() {
     if (reduce || !finePointer) return;
-    var MAX = 8; // degrees
+    var MAX = 13; // degrees, a clear lean so every card reads as responsive
 
     // delegated, so member cards that main.js builds after boot still tilt
     var active = null;
+    function resetCard(c) {
+      c.classList.remove('is-tilting');
+      c.style.setProperty('--rx', '0deg');
+      c.style.setProperty('--ry', '0deg');
+    }
     document.addEventListener('pointermove', function (e) {
       var card = e.target.closest ? e.target.closest('.member') : null;
       if (card !== active) {
-        if (active) { active.classList.remove('is-tilting'); active.style.setProperty('--rx', '0deg'); active.style.setProperty('--ry', '0deg'); }
+        if (active) resetCard(active);
         active = card;
         if (active) active.classList.add('is-tilting');
       }
@@ -239,6 +244,10 @@
       var py = (e.clientY - r.top) / r.height;
       card.style.setProperty('--ry', ((px - 0.5) * 2 * MAX).toFixed(2) + 'deg');
       card.style.setProperty('--rx', ((0.5 - py) * 2 * MAX).toFixed(2) + 'deg');
+    }, { passive: true });
+    // clear the lean when the pointer leaves the whole grid
+    document.addEventListener('pointerleave', function () {
+      if (active) { resetCard(active); active = null; }
     }, { passive: true });
   }
 
