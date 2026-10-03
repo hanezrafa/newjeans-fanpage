@@ -28,6 +28,15 @@
     });
   }
   function tilt(i) { var t = ((i * 37) % 7) - 3; return t === 0 ? 1 : t; }
+  // Fisher-Yates shuffle, so a member's board differs on every visit
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
 
   /* ---------- document title + page vars ---------- */
   document.title = member.name + ' · NewJeans Fan Board';
@@ -249,9 +258,9 @@
     .then(function (r) { return r.json(); })
     .then(function (list) {
       var featured = (NJ.featured || []);
-      mine = list.filter(function (p) {
+      mine = shuffle(list.filter(function (p) {
         return p.cat === member.id.toUpperCase() && featured.indexOf(p.file) === -1;
-      });
+      }));
       if (note) note.textContent = mine.length + ' photos of ' + member.name;
       if (!grid) return;
       var frag = document.createDocumentFragment();

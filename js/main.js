@@ -32,6 +32,15 @@
   function absUrl(p) {
     return new URL(p, document.baseURI).href;
   }
+  // Fisher-Yates shuffle, so the gallery order differs on every visit
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
 
   /* ---------- render: intro text ---------- */
   var introText = document.getElementById('intro-text');
@@ -258,7 +267,7 @@
     .then(function (list) {
       // drop photos already shown as hero prints or member portraits
       var featured = (NJ.featured || []);
-      ALL = list.filter(function (p) { return featured.indexOf(p.file) === -1; });
+      ALL = shuffle(list.filter(function (p) { return featured.indexOf(p.file) === -1; }));
       bindGallery();
       bindLightbox();
       render(true);
