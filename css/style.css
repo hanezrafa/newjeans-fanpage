@@ -381,11 +381,16 @@ main { display: block; }
 }
 .member:nth-child(even) { --tilt: 2deg; }
 /* hover: the print straightens, lifts and grows, with a deeper shadow.
-   a pointer-driven tilt (is-tilting) replaces the straighten while moving. */
+   a pointer-driven tilt (is-tilting) replaces the straighten while moving.
+   these selectors outrank the .reveal.is-in reset (same class count, later
+   in a higher-specificity form), so the transform is not pinned to none. */
 .member.is-tilting { transition: transform 0.08s linear, box-shadow 0.25s; }
-.member:hover { box-shadow: var(--shadow-lg); }
-.member:hover { transform: perspective(900px) rotateX(0deg) rotateY(0deg) rotate(0deg) translateY(-8px) scale(1.02); }
-.member.is-tilting { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--tilt, -2deg)) translateY(-8px) scale(1.02); }
+.member:hover,
+.member.reveal.is-in:hover { box-shadow: var(--shadow-lg); }
+.member:hover,
+.member.reveal.is-in:hover { transform: perspective(900px) rotateX(0deg) rotateY(0deg) rotate(0deg) translateY(-8px) scale(1.02); }
+.member.is-tilting,
+.member.reveal.is-in.is-tilting { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--tilt, -2deg)) translateY(-8px) scale(1.02); }
 .member:hover .member__photo { filter: saturate(1.08) contrast(1.03); }
 .member__photo {
   aspect-ratio: 3/4;
@@ -528,7 +533,8 @@ main { display: block; }
   transform: rotate(var(--tilt, -1.5deg));
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s;
 }
-.shot:hover { transform: rotate(0deg) translateY(-5px); box-shadow: var(--shadow); z-index: 2; }
+.shot:hover,
+.shot.reveal.is-in:hover { transform: rotate(0deg) translateY(-5px); box-shadow: var(--shadow); z-index: 2; }
 .shot__btn {
   display: block;
   width: 100%;
