@@ -42,6 +42,16 @@
 
 html { scroll-behavior: smooth; }
 
+/* keep phones from scrolling sideways: the oversized silhouette and the
+   portrait badge can poke a few px past the viewport. `clip` (not hidden)
+   contains it without making a scroll container, so sticky and fixed
+   layers (topbar, lightbox) keep working. */
+html, body { overflow-x: clip; }
+@supports not (overflow: clip) {
+  html { overflow-x: hidden; }
+  body { overflow-x: visible; }
+}
+
 body {
   margin: 0;
   /* anchor for the absolute bead field, so it spans the whole page */
@@ -1152,8 +1162,19 @@ main { display: block; }
   .release__note { grid-area: note; text-align: right; max-width: none; }
 
   .gallery__grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.9rem; }
-  /* members keep the 3-up grid on phones, just tighter */
-  .members__row { gap: 0.7rem; padding: 1rem 0; }
+
+  /* members: the 6-col desktop grid makes each card far too narrow on a
+     phone, so switch to a simple 2-up grid with auto placement */
+  .members__row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.8rem;
+    padding: 1rem 0;
+  }
+  .member:nth-child(1),
+  .member:nth-child(2),
+  .member:nth-child(3),
+  .member:nth-child(4),
+  .member:nth-child(5) { grid-column: auto; }
 }
 
 /* =========================================================
