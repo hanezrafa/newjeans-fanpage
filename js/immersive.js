@@ -444,6 +444,72 @@
     }, { passive: true });
   }
 
+  /* ---------------------------------------------------------
+     Theme: follow the OS by default, remember a manual choice, and let
+     the header button flip it. Applied before paint to avoid a flash.
+     --------------------------------------------------------- */
+  function initTheme() {
+    var root = document.documentElement;
+    var KEY = 'nj-theme';
+    var btn = document.getElementById('theme-toggle');
+    var icon = btn && btn.querySelector('.theme-toggle__icon');
+    var label = btn && btn.querySelector('.theme-toggle__label');
+
+    function apply(mode) {
+      var dark = mode === 'dark';
+      root.setAttribute('data-theme', dark ? 'dark' : 'light');
+      if (icon) icon.textContent = icon.getAttribute(dark ? 'data-night' : 'data-day');
+      if (label) label.textContent = dark ? 'Night' : 'Day';
+      if (btn) btn.setAttribute('aria-pressed', String(dark));
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    apply(saved || (mq.matches ? 'dark' : 'light'));
+
+    // keep following the OS until the visitor picks a mode themselves
+    mq.addEventListener && mq.addEventListener('change', function (e) {
+      var s = null; try { s = localStorage.getItem(KEY); } catch (err) {}
+      if (!s) apply(e.matches ? 'dark' : 'light');
+    });
+
+    if (btn) btn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      apply(next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+    });
+  }
+  // set the theme ASAP (before boot) so there is no flash of the wrong mode
+  (function () {
+    var root = document.documentElement, KEY = 'nj-theme', s = null;
+    try { s = localStorage.getItem(KEY); } catch (e) {}
+    var dark = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', dark ? 'dark' : 'light');
+  })();
+
+  /* ---------------------------------------------------------
+     Random wallpaper background: one of the curated shots per visit,
+     faded into the board. Light mode only (CSS hides it at night).
+     --------------------------------------------------------- */
+  function initRandomBackground() {
+    var veil = document.getElementById('bg-veil');
+    if (!veil || reduce) { if (veil) document.documentElement.classList.add('no-wallpaper'); return; }
+    fetch('js/wallpapers.json')
+      .then(function (r) { return r.json(); })
+      .then(function (list) {
+        if (!list || !list.length) { document.documentElement.classList.add('no-wallpaper'); return; }
+        // remember the last one so back-to-back loads feel different
+        var last = null;
+        try { last = sessionStorage.getItem('nj-bg'); } catch (e) {}
+        var pick = list[Math.floor(Math.random() * list.length)];
+        if (list.length > 1 && pick === last) pick = list[(list.indexOf(pick) + 1) % list.length];
+        try { sessionStorage.setItem('nj-bg', pick); } catch (e) {}
+        veil.style.backgroundImage = 'url("assets/wallpapers-web/' + pick + '")';
+      })
+      .catch(function () { document.documentElement.classList.add('no-wallpaper'); });
+  }
+
   function boot() {
     initCursor();
     initBeads();
@@ -456,6 +522,8 @@
     initBurst();
     initDragBoard();
     initGooey();
+    initTheme();
+    initRandomBackground();
   }
 
   if (document.readyState === 'loading') {

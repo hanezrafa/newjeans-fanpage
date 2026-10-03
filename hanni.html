@@ -16,6 +16,9 @@
 <body data-member="hanni">
   <a class="skip-link" href="#profile">Skip to profile</a>
 
+  <!-- random wallpaper background (light mode only) -->
+  <div class="bg-veil" id="bg-veil" aria-hidden="true"></div>
+
 
   <!-- Y2K custom cursor + trailing bead -->
   <div class="y2k-cursor" id="y2k-cursor" aria-hidden="true">
@@ -41,7 +44,12 @@
       <a href="index.html#members">Members</a>
       <a href="index.html#releases">Music</a>
       <a href="index.html#gallery">Gallery</a>
-    </nav>
+      </nav>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch between day and night">
+      <span class="theme-toggle__icon" data-day="☀" data-night="☾" aria-hidden="true">☀</span>
+      <span class="theme-toggle__label" aria-hidden="true">Day</span>
+    </button>
+</nav>
   </header>
 
   <main>
