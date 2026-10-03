@@ -206,7 +206,13 @@ main { position: relative; z-index: 1; }
   position: absolute;
   inset: 0;
   pointer-events: none;
+  transform: translate(var(--dragx, 0px), var(--dragy, 0px));
 }
+/* when the board is draggable (fine pointer), let it catch the grab but
+   keep the hero text/CTA above it interactive */
+.hero__pinwall.is-draggable { pointer-events: auto; cursor: grab; }
+.hero__pinwall.is-grabbing { cursor: grabbing; }
+.hero__center { position: relative; z-index: 2; }
 .print {
   position: absolute;
   margin: 0;
@@ -255,6 +261,23 @@ main { position: relative; z-index: 1; }
   color: var(--ink);
   line-height: 1;
 }
+/* gooey hover: the letters melt together and settle (SVG #goo filter) */
+@media (hover: hover) and (pointer: fine) {
+  .hero__word { transition: filter 0.35s ease; }
+  .hero__title:hover .hero__word { filter: url(#goo); }
+}
+/* scroll distortion: headings ripple as they enter, then settle */
+.warp-in { animation: warp-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes warp-settle {
+  0% { filter: url(#warp); letter-spacing: 0.06em; opacity: 0.25; }
+  70% { filter: url(#warp); opacity: 1; }
+  100% { filter: none; letter-spacing: normal; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .warp-in { animation: none; }
+  .hero__title:hover .hero__word { filter: none; }
+}
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 .hero__word {
   display: inline-block;
   font-size: clamp(3.1rem, 9.2vw, 9rem);

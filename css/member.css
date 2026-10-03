@@ -138,6 +138,11 @@
 .profile__name .lt:nth-child(5) { --rot: -5deg; --dy: 0.02em; }
 .profile__name .lt:nth-child(6) { --rot: 2deg; --dy: -0.02em; }
 .profile__name .lt:nth-child(7) { --rot: -3deg; --dy: 0.03em; }
+/* gooey hover: the profile name melts together on pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  .profile__name { transition: filter 0.35s ease; }
+  .profile__name:hover { filter: url(#goo); }
+}
 
 /* the hand-signed name, in the elegant serif */
 .profile__signature {

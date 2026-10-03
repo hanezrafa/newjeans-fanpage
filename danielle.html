@@ -16,6 +16,23 @@
 <body data-member="danielle">
   <a class="skip-link" href="#profile">Skip to profile</a>
 
+  <!-- SVG filters: gooey (hover) + scroll distortion, both pure inline SVG -->
+  <svg class="svg-defs" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+      <filter id="warp">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="2" seed="7" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+
   <!-- Y2K custom cursor + trailing bead -->
   <div class="y2k-cursor" id="y2k-cursor" aria-hidden="true">
     <span class="y2k-cursor__dot"></span>

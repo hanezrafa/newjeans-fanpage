@@ -338,6 +338,103 @@
       var d = e.detail || {};
       if (typeof d.x === 'number' && typeof d.y === 'number') beadBurst(d.x, d.y);
     });
+    // a member page opens with a burst in that member's colour
+    var body = document.body;
+    if (body.hasAttribute('data-member')) {
+      var tone = getComputedStyle(document.documentElement).getPropertyValue('--tone').trim() || '#ff8fc4';
+      setTimeout(function () {
+        memberBurst(window.innerWidth / 2, window.innerHeight * 0.42, tone);
+      }, 420);
+    }
+  }
+
+  function memberBurst(x, y, colour) {
+    if (reduce) return;
+    var n = 26;
+    for (var i = 0; i < n; i++) {
+      var b = document.createElement('span');
+      b.className = 'burst-bead';
+      b.style.background = 'radial-gradient(circle at 35% 30%, #fff, ' + colour + ' 62%, rgba(0,0,0,0.25))';
+      b.style.left = x + 'px';
+      b.style.top = y + 'px';
+      var ang = (Math.PI * 2 * i) / n + Math.random() * 0.4;
+      var dist = 90 + Math.random() * 160;
+      b.style.setProperty('--dx', (Math.cos(ang) * dist).toFixed(0) + 'px');
+      b.style.setProperty('--dy', (Math.sin(ang) * dist).toFixed(0) + 'px');
+      var size = 8 + Math.random() * 16;
+      b.style.width = b.style.height = size + 'px';
+      document.body.appendChild(b);
+      (function (node) { setTimeout(function () { node.remove(); }, 900); })(b);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Scroll distortion: big headings ripple into place as they enter
+     --------------------------------------------------------- */
+  function initWarpHeadings() {
+    if (reduce || !('IntersectionObserver' in window)) return;
+    var heads = document.querySelectorAll('.hero__word, .section-num, .profile__name, .profile__signature');
+    if (!heads.length) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          var el = en.target;
+          el.classList.add('warp-in');
+          // clear the class after it plays so it can replay if scrolled back into view
+          setTimeout(function () { el.classList.remove('warp-in'); }, 1100);
+          io.unobserve(el);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+    heads.forEach(function (h) { io.observe(h); });
+  }
+
+  /* ---------------------------------------------------------
+     Drag-to-explore: the hero pinwall can be nudged like a real
+     cork board. Pointer drag moves it; it eases to a clamp so it
+     never flies off. Skipped on touch (native scroll wins) and reduced.
+     --------------------------------------------------------- */
+  function initDragBoard() {
+    if (reduce || !finePointer) return;
+    var board = document.querySelector('.hero__pinwall');
+    if (!board) return;
+    var DRAGX = 40, DRAGY = 26; // how far it may be nudged
+    var x = 0, y = 0, tx = 0, ty = 0;
+    var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0;
+
+    board.classList.add('is-draggable');
+
+    board.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      dragging = true;
+      sx = e.clientX; sy = e.clientY; ox = x; oy = y;
+      board.classList.add('is-grabbing');
+      board.setPointerCapture && board.setPointerCapture(e.pointerId);
+    });
+    board.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      tx = Math.max(-DRAGX, Math.min(DRAGX, ox + (e.clientX - sx)));
+      ty = Math.max(-DRAGY, Math.min(DRAGY, oy + (e.clientY - sy)));
+    });
+    function end(e) {
+      if (!dragging) return;
+      dragging = false;
+      board.classList.remove('is-grabbing');
+      board.releasePointerCapture && e.pointerId != null && board.hasPointerCapture && board.hasPointerCapture(e.pointerId) && board.releasePointerCapture(e.pointerId);
+    }
+    board.addEventListener('pointerup', end);
+    board.addEventListener('pointercancel', end);
+
+    (function loop() {
+      requestAnimationFrame(loop);
+      // ease toward the target, and drift home when released
+      var gx = dragging ? tx : 0;
+      var gy = dragging ? ty : 0;
+      x += (gx - x) * 0.1; y += (gy - y) * 0.1;
+      if (Math.abs(x) < 0.05 && Math.abs(y) < 0.05 && !dragging) x = y = 0;
+      board.style.setProperty('--dragx', x.toFixed(2) + 'px');
+      board.style.setProperty('--dragy', y.toFixed(2) + 'px');
+    })();
   }
 
   function boot() {
@@ -350,6 +447,8 @@
     initScrollProgress();
     initRipple();
     initBurst();
+    initWarpHeadings();
+    initDragBoard();
   }
 
   if (document.readyState === 'loading') {
