@@ -175,6 +175,15 @@ var NJ = {
       blurb: 'A softer, spring-set single with B-side "Bubble Gum", before a full Japanese debut cycle began.' },
     { id: 'supernatural', year: '2024', title: 'Supernatural', tone: '#ffc978', bg: 'assets/eras/era-supernatural.jpg',
       blurb: 'Their official Japanese debut, with "Right Now" as its B-side, and a fan meeting at the Tokyo Dome.' }
+  ],
+
+  // Photos already used somewhere prominent (hero prints, member portraits,
+  // silhouette art). The galleries drop them, so the same shot is not shown
+  // twice and the board still feels full of photos you have not seen.
+  featured: [
+    'NewJeans-21.png',
+    'MINJI-12.png', 'HANNI-12.png', 'DANIELLE-2-4.png', 'HAERIN-7.png', 'HYEIN-3.png',
+    'MINJI-1-2.png', 'HANNI-2-2.png', 'DANIELLE-1-2.png', 'HAERIN-1-1.png', 'HYEIN-1-2.png'
   ]
 };
 

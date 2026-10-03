@@ -248,7 +248,10 @@
   fetch('js/photos.json')
     .then(function (r) { return r.json(); })
     .then(function (list) {
-      mine = list.filter(function (p) { return p.cat === member.id.toUpperCase(); });
+      var featured = (NJ.featured || []);
+      mine = list.filter(function (p) {
+        return p.cat === member.id.toUpperCase() && featured.indexOf(p.file) === -1;
+      });
       if (note) note.textContent = mine.length + ' photos of ' + member.name;
       if (!grid) return;
       var frag = document.createDocumentFragment();

@@ -256,7 +256,9 @@
   fetch('js/photos.json')
     .then(function (r) { return r.json(); })
     .then(function (list) {
-      ALL = list;
+      // drop photos already shown as hero prints or member portraits
+      var featured = (NJ.featured || []);
+      ALL = list.filter(function (p) { return featured.indexOf(p.file) === -1; });
       bindGallery();
       bindLightbox();
       render(true);
