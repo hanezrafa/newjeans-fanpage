@@ -199,7 +199,10 @@
      shared view-transition-name, so it morphs into the profile page.
      --------------------------------------------------------- */
   function initPageMorph() {
-    if (!document.startViewTransition || reduce) return;
+    if (reduce) return;
+    // with `@view-transition { navigation: auto }` the browser runs the
+    // cross-document transition itself. We only tag the clicked photo so it
+    // lines up with the portrait on the next page, then let the link go.
     document.addEventListener('click', function (e) {
       var link = e.target.closest('.member__link');
       if (!link) return;
@@ -208,12 +211,10 @@
       if (link.host && link.host !== location.host) return;
       var photo = link.querySelector('.member__photo');
       if (!photo) return;
-      e.preventDefault();
+      // give the clicked photo the shared name for this snapshot
       photo.style.viewTransitionName = 'member-photo';
-      document.startViewTransition(function () {
-        location.href = href;
-      });
-      setTimeout(function () { photo.style.viewTransitionName = ''; }, 800);
+      // clear it again in case the navigation is cancelled (e.g. open in new tab)
+      setTimeout(function () { photo.style.viewTransitionName = ''; }, 1500);
     });
   }
 

@@ -881,12 +881,19 @@ main { display: block; }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
 /* ---------- cross-page View Transitions ----------
-   on a member click, JS tags just the clicked photo with a shared
-   view-transition-name, so it morphs from the grid into the profile page. */
+   clicking a member photo morphs it into the profile page photo. The grid
+   side names just the clicked photo in JS; the profile side names its
+   portrait here (one per page, so the name stays unique). */
+.profile__portrait img { view-transition-name: member-photo; }
+/* opt in to the cross-document transition (top level, so it is valid) */
+@view-transition { navigation: auto; }
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-group(member-photo) { animation-duration: 0.45s; }
   ::view-transition-old(member-photo),
   ::view-transition-new(member-photo) { animation-duration: 0.45s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
 }
 
 /* =========================================================
