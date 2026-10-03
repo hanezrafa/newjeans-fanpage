@@ -842,6 +842,14 @@ main { display: block; }
   body.has-y2k-cursor,
   body.has-y2k-cursor a,
   body.has-y2k-cursor button { cursor: none; }
+
+  /* night mode: multiply would vanish on a dark board, so blend light and
+     make the bead and ring white to stay visible */
+  [data-theme="dark"] .y2k-cursor { mix-blend-mode: screen; }
+  [data-theme="dark"] .y2k-cursor__dot { background: #ffffff; }
+  [data-theme="dark"] .y2k-cursor__ring { border-color: #ffffff; opacity: 0.7; }
+  [data-theme="dark"] .y2k-cursor.is-hot .y2k-cursor__dot { background: var(--blossom); }
+  [data-theme="dark"] .y2k-cursor.is-hot .y2k-cursor__ring { border-color: var(--blossom); opacity: 1; }
 }
 
 /* ---------- Powerpuff bead field ---------- */
