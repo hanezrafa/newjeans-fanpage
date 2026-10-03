@@ -24,6 +24,8 @@
   --shadow: 0 14px 30px -14px rgba(20, 22, 28, 0.42),
             0 3px 8px -4px rgba(20, 22, 28, 0.22);
   --shadow-sm: 0 8px 18px -10px rgba(20, 22, 28, 0.38);
+  --shadow-lg: 0 26px 46px -18px rgba(20, 22, 28, 0.5),
+               0 6px 14px -6px rgba(20, 22, 28, 0.3);
 
   --font-display: "Anton", system-ui, sans-serif;
   --font-body: "Archivo", system-ui, sans-serif;
@@ -378,17 +380,20 @@ main { display: block; }
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
 }
 .member:nth-child(even) { --tilt: 2deg; }
-/* the tilt is driven by the pointer in JS; hover only lifts and lifts the tilt */
+/* hover: the print straightens, lifts and grows, with a deeper shadow.
+   a pointer-driven tilt (is-tilting) replaces the straighten while moving. */
 .member.is-tilting { transition: transform 0.08s linear, box-shadow 0.25s; }
-.member:hover { box-shadow: var(--shadow-lg, var(--shadow)); }
-.member:hover,
-.member.is-tilting { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--tilt, -2deg)) translateY(-4px); }
+.member:hover { box-shadow: var(--shadow-lg); }
+.member:hover { transform: perspective(900px) rotateX(0deg) rotateY(0deg) rotate(0deg) translateY(-8px) scale(1.02); }
+.member.is-tilting { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--tilt, -2deg)) translateY(-8px) scale(1.02); }
+.member:hover .member__photo { filter: saturate(1.08) contrast(1.03); }
 .member__photo {
   aspect-ratio: 3/4;
   width: 100%;
   height: auto;
   object-fit: cover;
   background: var(--board-3);
+  transition: filter 0.25s ease;
 }
 /* the whole member print links to its profile page */
 .member__link { display: block; color: inherit; text-decoration: none; }
