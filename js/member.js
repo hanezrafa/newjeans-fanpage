@@ -65,6 +65,46 @@
   var bio = document.getElementById('pf-bio');
   if (bio) bio.textContent = member.bio;
 
+  /* ---------- emoji sticker badge on the portrait ---------- */
+  var badge = document.getElementById('pf-badge');
+  if (badge) {
+    badge.textContent = member.emoji || '★';
+    badge.setAttribute('aria-hidden', 'true');
+  }
+
+  /* ---------- signature line (hand-signed feel) ---------- */
+  var sig = document.getElementById('pf-signature');
+  if (sig) {
+    sig.textContent = member.name;
+    sig.setAttribute('aria-hidden', 'true');
+  }
+
+  /* ---------- Y2K ID card: role, born, from + a barcode from the name ---------- */
+  var idCard = document.getElementById('pf-idcard');
+  if (idCard) {
+    var rows = [
+      ['Role', member.role || member.status || 'Member'],
+      ['Born', member.born || ''],
+      ['From', member.from || '']
+    ].filter(function (r) { return r[1]; });
+    var cells = rows.map(function (r) {
+      return '<div class="idcard__row"><span class="k">' + esc(r[0]) + '</span><span class="v">' + esc(r[1]) + '</span></div>';
+    }).join('');
+    // a decorative barcode drawn from the member id, so it differs per member
+    var bars = '';
+    var seed = member.id + member.name;
+    for (var bi = 0; bi < seed.length; bi++) {
+      var w = (seed.charCodeAt(bi) % 3) + 1;
+      bars += '<i style="width:' + w + 'px"></i>';
+    }
+    idCard.innerHTML =
+      '<div class="idcard__head"><span class="idcard__brand">' + esc(member.name).toUpperCase() + '</span>' +
+      '<span class="idcard__emoji" aria-hidden="true">' + (member.emoji || '★') + '</span></div>' +
+      '<div class="idcard__body">' + cells + '</div>' +
+      '<div class="idcard__foot"><span class="idcard__bars" aria-hidden="true">' + bars + '</span>' +
+      '<span class="idcard__id">NJ-' + esc(member.id).toUpperCase() + '</span></div>';
+  }
+
   /* ---------- portrait ---------- */
   var portrait = document.getElementById('pf-portrait');
   if (portrait) {
@@ -78,6 +118,41 @@
     var silPhoto = member.silhouette || member.photo;
     sil.style.backgroundImage = 'url("' + PHOTO_BASE + silPhoto + '")';
     sil.style.setProperty('--tone', member.tone);
+  }
+
+  /* ---------- the silhouette drifts slowly as the page scrolls ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (sil && !reduce) {
+    var ticking = false;
+    var updateSil = function () {
+      var drift = Math.min(window.scrollY, 1400) * -0.05; // up to ~70px of drift
+      sil.style.setProperty('--sy', drift.toFixed(1) + 'px');
+      ticking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateSil); }
+    }, { passive: true });
+    updateSil();
+  }
+
+  /* ---------- 3D tilt on the portrait, like the home member cards ---------- */
+  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (portrait && finePointer && !reduce) {
+    var pcard = portrait.parentElement; // the .profile__portrait figure
+    var MAX = 9;
+    pcard.addEventListener('pointerenter', function () { pcard.classList.add('is-tilting'); });
+    pcard.addEventListener('pointermove', function (e) {
+      var r = pcard.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;
+      var py = (e.clientY - r.top) / r.height;
+      pcard.style.setProperty('--pry', ((px - 0.5) * 2 * MAX).toFixed(2) + 'deg');
+      pcard.style.setProperty('--prx', ((0.5 - py) * 2 * MAX).toFixed(2) + 'deg');
+    });
+    pcard.addEventListener('pointerleave', function () {
+      pcard.classList.remove('is-tilting');
+      pcard.style.setProperty('--prx', '0deg');
+      pcard.style.setProperty('--pry', '0deg');
+    });
   }
 
   /* ---------- facts ---------- */

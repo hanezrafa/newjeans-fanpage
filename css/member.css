@@ -40,10 +40,17 @@
   background: var(--print-edge);
   padding: 0.7rem 0.7rem 0.7rem;
   box-shadow: var(--shadow);
-  transform: rotate(-1.5deg);
+  transform: perspective(1000px) rotateX(var(--prx, 0deg)) rotateY(var(--pry, 0deg)) rotate(-1.5deg);
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
   max-width: 30rem;
   margin: 0 auto;
   width: 100%;
+}
+/* pointer tilt, same feel as the member cards on the home page */
+.profile__portrait.is-tilting {
+  transition: transform 0.08s linear, box-shadow 0.25s;
+  box-shadow: var(--shadow-lg);
 }
 .profile__portrait img {
   width: 100%;
@@ -61,6 +68,45 @@
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #fff, var(--tone) 60%, rgba(0,0,0,0.4));
   box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+}
+/* the member's emoji as a sticker badge on the portrait corner */
+.profile__badge {
+  position: absolute;
+  z-index: 2;
+  right: -0.9rem;
+  bottom: -0.9rem;
+  width: 3.4rem;
+  height: 3.4rem;
+  display: grid;
+  place-items: center;
+  font-size: 1.7rem;
+  line-height: 1;
+  border-radius: 50%;
+  background: var(--tone, var(--acid));
+  border: 3px solid var(--print-edge);
+  box-shadow: var(--shadow-sm);
+  animation: badge-bob 4.5s ease-in-out infinite;
+}
+/* a dashed ring spins around the still emoji, so it feels alive but readable */
+.profile__badge::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2px dashed var(--ink);
+  opacity: 0.5;
+  animation: badge-spin 16s linear infinite;
+}
+@keyframes badge-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes badge-bob {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-4px) rotate(3deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile__badge, .profile__badge::after { animation: none; }
 }
 
 /* the text side */
@@ -92,6 +138,19 @@
 .profile__name .lt:nth-child(5) { --rot: -5deg; --dy: 0.02em; }
 .profile__name .lt:nth-child(6) { --rot: 2deg; --dy: -0.02em; }
 .profile__name .lt:nth-child(7) { --rot: -3deg; --dy: 0.03em; }
+
+/* the hand-signed name, in the elegant serif */
+.profile__signature {
+  font-family: var(--font-elegant);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+  line-height: 1;
+  color: var(--tone-ink, var(--bubble-dk));
+  margin: 0.1rem 0 0.35rem;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
 .profile__hangul {
   font-family: var(--font-mono);
   font-size: clamp(0.9rem, 2vw, 1.1rem);
@@ -124,6 +183,116 @@
   color: var(--ink-faint);
 }
 .profile__facts .v { font-weight: 600; text-align: right; }
+
+/* ---------- Y2K ID card / passport ---------- */
+.idcard {
+  position: relative;
+  margin: 0 0 1.6rem;
+  padding: 0.7rem 0.8rem 0.6rem;
+  background: var(--ink);
+  color: var(--board);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+/* a small tone notch in the top-left corner, so the card carries the
+   member colour without the heavy one-sided border tell */
+.idcard::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 22px; height: 22px;
+  background: var(--tone, var(--acid));
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+/* a faint tone band down the right edge */
+.idcard::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 34%;
+  height: 100%;
+  background: var(--tone, var(--acid));
+  opacity: 0.16;
+  clip-path: polygon(45% 0, 100% 0, 100% 100%, 0 100%);
+}
+.idcard__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed rgba(255,255,255,0.3);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+.idcard__brand {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+}
+.idcard__emoji { font-size: 1.2rem; line-height: 1; }
+.idcard__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.82rem;
+  padding: 0.16rem 0;
+}
+.idcard__row .k {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  align-self: center;
+}
+.idcard__row .v { font-weight: 600; text-align: right; }
+.idcard__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.55rem;
+  position: relative;
+  z-index: 1;
+}
+.idcard__bars { display: flex; align-items: flex-end; gap: 2px; height: 18px; }
+.idcard__bars i {
+  display: block;
+  height: 100%;
+  background: var(--board);
+  opacity: 0.85;
+}
+.idcard__id {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  opacity: 0.75;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* the ID card slides up slightly as it enters, tying it to the reveal world */
+  .idcard { animation: idcard-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  @keyframes idcard-in {
+    from { opacity: 0; transform: translateY(12px) rotate(-0.6deg); }
+    to { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .idcard { animation: none; }
+}
+
+/* a tone accent block behind the whole meta column, giving each page its colour */
+.profile__meta { position: relative; }
+.profile__meta::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -1.4rem;
+  left: -1.6rem;
+  width: 6.5rem;
+  height: 6.5rem;
+  background: var(--tone, var(--acid));
+  opacity: 0.22;
+  transform: rotate(-6deg);
+}
 
 .profile__nav { display: flex; flex-wrap: wrap; gap: 0.7rem; }
 .profile__nav a {
@@ -165,16 +334,26 @@
   left: 50%;
   width: min(125vh, 115vw);
   height: min(125vh, 115vw);
-  transform: translate(-50%, -54%);
+  /* --sy is nudged by JS as the page scrolls, so the figure drifts slowly */
+  transform: translate(-50%, calc(-54% + var(--sy, 0px))) scale(var(--sscale, 1));
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   opacity: 0.34;
   filter: grayscale(1) contrast(1.15);
   pointer-events: none;
+  will-change: transform;
   /* tinted toward the member's colour and dissolved at the edges */
   -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
   mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
+}
+/* gentle breathing, so the figure is never fully still */
+@media (prefers-reduced-motion: no-preference) {
+  .silhouette { animation: sil-breathe 11s ease-in-out infinite; }
+  @keyframes sil-breathe {
+    0%, 100% { --sscale: 1; }
+    50% { --sscale: 1.035; }
+  }
 }
 .silhouette::after {
   content: "";
