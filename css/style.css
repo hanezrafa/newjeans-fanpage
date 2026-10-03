@@ -211,22 +211,6 @@ main { position: relative; z-index: 1; }
 .hero__pinwall.is-draggable { pointer-events: none; }
 .print.is-draggable { pointer-events: auto; cursor: grab; touch-action: none; z-index: 3; }
 .print.is-grabbing { cursor: grabbing; z-index: 6; }
-/* a small hint that the board can be dragged (pointer devices only) */
-.hero__drag-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 1.1rem;
-  transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  color: var(--ink-faint);
-  pointer-events: none;
-  z-index: 3;
-}
-@media (hover: none), (max-width: 720px) {
-  .hero__drag-hint { display: none; }
-}
 .print {
   position: absolute;
   margin: 0;
