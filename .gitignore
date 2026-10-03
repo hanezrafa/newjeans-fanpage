@@ -20,3 +20,6 @@ server.err
 
 # Leftover scrape manifest (not used by the site)
 assets/photos/manifest.json
+
+# Agent notes kept on disk but not published
+AGENTS.md
