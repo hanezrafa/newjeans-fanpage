@@ -448,6 +448,23 @@
     });
   }
 
+  /* ---------------------------------------------------------
+     Gooey headline: the wordmark melts on hover. Driven in JS because
+     the headline must not capture the pointer (photos drag over it).
+     --------------------------------------------------------- */
+  function initGooey() {
+    if (reduce || !finePointer) return;
+    var title = document.querySelector('.hero__title');
+    if (!title) return;
+    var word = title.querySelector('.hero__word');
+    if (!word) return;
+    document.addEventListener('mousemove', function (e) {
+      var r = word.getBoundingClientRect();
+      var on = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      title.classList.toggle('is-goo', on);
+    }, { passive: true });
+  }
+
   function boot() {
     initCursor();
     initBeads();
@@ -460,6 +477,7 @@
     initBurst();
     initWarpHeadings();
     initDragBoard();
+    initGooey();
   }
 
   if (document.readyState === 'loading') {
