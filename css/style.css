@@ -210,9 +210,33 @@ main { position: relative; z-index: 1; }
 }
 /* when the board is draggable (fine pointer), let it catch the grab but
    keep the hero text/CTA above it interactive */
-.hero__pinwall.is-draggable { pointer-events: auto; cursor: grab; }
+.hero__pinwall.is-draggable {
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
 .hero__pinwall.is-grabbing { cursor: grabbing; }
+/* the prints lift slightly while the board is held, so the drag reads */
+.hero__pinwall.is-grabbing .print {
+  box-shadow: 0 22px 40px -18px rgba(20, 22, 28, 0.5);
+}
 .hero__center { position: relative; z-index: 2; }
+/* a small hint that the board can be dragged (pointer devices only) */
+.hero__drag-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 1.1rem;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  pointer-events: none;
+  z-index: 3;
+}
+@media (hover: none), (max-width: 720px) {
+  .hero__drag-hint { display: none; }
+}
 .print {
   position: absolute;
   margin: 0;

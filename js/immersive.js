@@ -398,14 +398,18 @@
     if (reduce || !finePointer) return;
     var board = document.querySelector('.hero__pinwall');
     if (!board) return;
-    var DRAGX = 40, DRAGY = 26; // how far it may be nudged
+    var LIMIT = 150; // how far the board may be pushed, in px
     var x = 0, y = 0, tx = 0, ty = 0;
-    var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0;
+    var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0, lastDown = 0;
 
     board.classList.add('is-draggable');
 
     board.addEventListener('pointerdown', function (e) {
       if (e.button !== 0) return;
+      // a quick second press = reset to centre (pointer capture eats dblclick)
+      var now = performance.now();
+      if (now - lastDown < 320) { tx = 0; ty = 0; lastDown = 0; return; }
+      lastDown = now;
       dragging = true;
       sx = e.clientX; sy = e.clientY; ox = x; oy = y;
       board.classList.add('is-grabbing');
@@ -413,8 +417,8 @@
     });
     board.addEventListener('pointermove', function (e) {
       if (!dragging) return;
-      tx = Math.max(-DRAGX, Math.min(DRAGX, ox + (e.clientX - sx)));
-      ty = Math.max(-DRAGY, Math.min(DRAGY, oy + (e.clientY - sy)));
+      tx = Math.max(-LIMIT, Math.min(LIMIT, ox + (e.clientX - sx)));
+      ty = Math.max(-LIMIT, Math.min(LIMIT, oy + (e.clientY - sy)));
     });
     function end(e) {
       if (!dragging) return;
@@ -424,13 +428,14 @@
     }
     board.addEventListener('pointerup', end);
     board.addEventListener('pointercancel', end);
+    // double-click springs the board back to centre
+    board.addEventListener('dblclick', function () { tx = 0; ty = 0; });
 
     (function loop() {
       requestAnimationFrame(loop);
-      // ease toward the target, and drift home when released
-      var gx = dragging ? tx : 0;
-      var gy = dragging ? ty : 0;
-      x += (gx - x) * 0.1; y += (gy - y) * 0.1;
+      // while dragging, follow the pointer; otherwise KEEP the last spot
+      // (double-click the board to spring it back to centre)
+      x += (tx - x) * 0.12; y += (ty - y) * 0.12;
       if (Math.abs(x) < 0.05 && Math.abs(y) < 0.05 && !dragging) x = y = 0;
       board.style.setProperty('--dragx', x.toFixed(2) + 'px');
       board.style.setProperty('--dragy', y.toFixed(2) + 'px');
