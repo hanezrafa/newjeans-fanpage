@@ -334,8 +334,8 @@
   left: 50%;
   width: min(125vh, 115vw);
   height: min(125vh, 115vw);
-  /* --sy is nudged by JS as the page scrolls, so the figure drifts slowly */
-  transform: translate(-50%, calc(-54% + var(--sy, 0px))) scale(var(--sscale, 1));
+  /* JS drives the whole transform (drift + breathing), eased each frame */
+  transform: translate(-50%, -54%);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -346,14 +346,6 @@
   /* tinted toward the member's colour and dissolved at the edges */
   -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
   mask-image: radial-gradient(closest-side, #000 40%, transparent 80%);
-}
-/* gentle breathing, so the figure is never fully still */
-@media (prefers-reduced-motion: no-preference) {
-  .silhouette { animation: sil-breathe 11s ease-in-out infinite; }
-  @keyframes sil-breathe {
-    0%, 100% { --sscale: 1; }
-    50% { --sscale: 1.035; }
-  }
 }
 .silhouette::after {
   content: "";

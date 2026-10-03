@@ -120,19 +120,33 @@
     sil.style.setProperty('--tone', member.tone);
   }
 
-  /* ---------- the silhouette drifts slowly as the page scrolls ---------- */
+  /* ---------- the silhouette drifts slowly and breathes, eased in JS ---------- */
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (sil && !reduce) {
-    var ticking = false;
-    var updateSil = function () {
-      var drift = Math.min(window.scrollY, 1400) * -0.05; // up to ~70px of drift
-      sil.style.setProperty('--sy', drift.toFixed(1) + 'px');
-      ticking = false;
+    var sy = 0;       // current drift
+    var syTarget = 0; // drift from the scroll position
+    var start = performance.now();
+    var running = true;
+
+    var onScroll = function () {
+      // up to ~80px of upward drift over the first ~1800px of scroll
+      syTarget = Math.min(window.scrollY, 1800) * -0.045;
     };
-    window.addEventListener('scroll', function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(updateSil); }
-    }, { passive: true });
-    updateSil();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    document.addEventListener('visibilitychange', function () { running = !document.hidden; });
+
+    (function loop(now) {
+      requestAnimationFrame(loop);
+      if (!running) return;
+      // ease toward the scroll target so the motion never snaps
+      sy += (syTarget - sy) * 0.06;
+      var t = (now - start) / 1000;
+      var breathe = 1 + Math.sin(t * 0.5) * 0.018; // subtle, ~11s cycle
+      sil.style.transform =
+        'translate(-50%, calc(-54% + ' + sy.toFixed(2) + 'px)) scale(' + breathe.toFixed(4) + ')';
+    })(start);
   }
 
   /* ---------- 3D tilt on the portrait, like the home member cards ---------- */
